@@ -7,20 +7,47 @@
         mc:Ignorable="d"
         Title="QTP 1.0" Height="450" Width="800">
     <Grid>
-        <TabControl>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <TabControl Background="#FF585858" BorderBrush="#FF585858">
             <TabItem Header="Просмотр тестов">
+                <TabItem.Background>
+                    <LinearGradientBrush EndPoint="0,1">
+                        <GradientStop Color="#FFF0F0F0"/>
+                        <GradientStop Color="#FF585858" Offset="1"/>
+                    </LinearGradientBrush>
+                </TabItem.Background>
                 <Grid Background="#FF585858">
-                    <TextBlock Margin="23,0,446,292">Темы тестирования</TextBlock>
-                    <TreeView x:Name="TemsTree" Width="200" Margin="10,20,0,0" Background="#FF585858" BorderBrush="#FF585858" HorizontalAlignment="Left">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="31*"/>
+                        <ColumnDefinition Width="128*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Margin="23,0,446,292" Grid.ColumnSpan="2">Темы тестирования</TextBlock>
+                    <TreeView x:Name="TemsTree" Width="200" Margin="10,20,0,0" Background="#FF585858" BorderBrush="#FF585858" HorizontalAlignment="Left" Grid.ColumnSpan="2">
                     </TreeView>
-                    <Button x:Name="b_addtems" Content="Добавить тему" HorizontalAlignment="Left" Margin="677,10,0,0" VerticalAlignment="Top" Click="Button_Click" Width="107"/>
-                    <Button x:Name="b_deleteTems" Content="Удалить тему" HorizontalAlignment="Left" Margin="677,35,0,0" VerticalAlignment="Top" Width="107" Click="b_deleteTems_Click"/>
-                    <TextBox x:Name="TextBoxNameTems" HorizontalAlignment="Left" Margin="517,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="139" Height="20" Background="#FFA7A7A7" SelectionBrush="#FFF8C226" BorderBrush="#FFF8C226" SelectionTextBrush="#FFF8C226"/>
+                    <Button x:Name="b_addtems" Content="Добавить тему" HorizontalAlignment="Left" Margin="522,10,0,0" VerticalAlignment="Top" Click="Button_Click" Width="107" Grid.Column="1"/>
+                    <Button x:Name="b_deleteTems" Content="Удалить тему" HorizontalAlignment="Left" Margin="522,35,0,0" VerticalAlignment="Top" Width="107" Click="b_deleteTems_Click" Grid.Column="1"/>
+                    <TextBox x:Name="TextBoxNameTems" HorizontalAlignment="Left" Margin="362,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="139" Height="20" Background="#FFA7A7A7" SelectionBrush="#FFF8C226" BorderBrush="#FFF8C226" SelectionTextBrush="#FFF8C226" Grid.Column="1"/>
+                    <Button x:Name="b_disableTems" Content="Выключить тему" HorizontalAlignment="Left" Margin="522,60,0,0" VerticalAlignment="Top" Width="107" Grid.Column="1"/>
 
                 </Grid>
             </TabItem>
-            <TabItem Header="TabItem">
-                <Grid Background="#FFE5E5E5"/>
+            <TabItem Header="Настройка подключения">
+                <TabItem.Background>
+                    <LinearGradientBrush EndPoint="0,1">
+                        <GradientStop Color="#FFF0F0F0"/>
+                        <GradientStop Color="#FF585858" Offset="1"/>
+                    </LinearGradientBrush>
+                </TabItem.Background>
+                <Grid Background="#FF585858">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <TextBox x:Name="tb_pathSQL" HorizontalAlignment="Left" Margin="102,0,0,0" TextWrapping="Wrap" VerticalAlignment="Center" Width="295" Height="22"/>
+                    <Button x:Name="b_replacePathSQL" Content="Изменить" HorizontalAlignment="Left" Margin="443,0,0,0" VerticalAlignment="Center" Height="22" Width="146" Click="b_replacePathSQL_Click"/>
+                    <Button x:Name="b_createTableDB" Content="Создать таблицы" HorizontalAlignment="Left" Margin="611,0,0,0" VerticalAlignment="Center" Height="22" Width="145" Click="b_createTableDB_Click"/>
+                </Grid>
             </TabItem>
         </TabControl>
 
