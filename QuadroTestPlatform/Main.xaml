@@ -20,16 +20,18 @@
                 </TabItem.Background>
                 <Grid Background="#FF585858">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="31*"/>
-                        <ColumnDefinition Width="128*"/>
+                        <ColumnDefinition Width="21*"/>
+                        <ColumnDefinition Width="133*"/>
+                        <ColumnDefinition Width="639*"/>
                     </Grid.ColumnDefinitions>
-                    <TextBlock Margin="23,0,446,292" Grid.ColumnSpan="2">Темы тестирования</TextBlock>
-                    <TreeView x:Name="TemsTree" Width="200" Margin="10,20,0,0" Background="#FF585858" BorderBrush="#FF585858" HorizontalAlignment="Left" Grid.ColumnSpan="2">
+                    <TextBlock Margin="2,0,446,292" Grid.ColumnSpan="2" Grid.Column="1">Темы тестирования</TextBlock>
+                    <TreeView x:Name="TemsTree" Width="200" Margin="10,20,0,0" Background="#FF585858" BorderBrush="#FF585858" HorizontalAlignment="Left" Grid.ColumnSpan="3">
+                        
                     </TreeView>
-                    <Button x:Name="b_addtems" Content="Добавить тему" HorizontalAlignment="Left" Margin="522,10,0,0" VerticalAlignment="Top" Click="Button_Click" Width="107" Grid.Column="1"/>
-                    <Button x:Name="b_deleteTems" Content="Удалить тему" HorizontalAlignment="Left" Margin="522,35,0,0" VerticalAlignment="Top" Width="107" Click="b_deleteTems_Click" Grid.Column="1"/>
-                    <TextBox x:Name="TextBoxNameTems" HorizontalAlignment="Left" Margin="362,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="139" Height="20" Background="#FFA7A7A7" SelectionBrush="#FFF8C226" BorderBrush="#FFF8C226" SelectionTextBrush="#FFF8C226" Grid.Column="1"/>
-                    <Button x:Name="b_disableTems" Content="Выключить тему" HorizontalAlignment="Left" Margin="522,60,0,0" VerticalAlignment="Top" Width="107" Grid.Column="1"/>
+                    <Button x:Name="b_addtems" Content="Добавить тему" HorizontalAlignment="Left" Margin="522,10,0,0" VerticalAlignment="Top" Click="Button_Click" Width="107" Grid.Column="2"/>
+                    <Button x:Name="b_deleteTems" Content="Удалить тему" HorizontalAlignment="Left" Margin="522,35,0,0" VerticalAlignment="Top" Width="107" Click="b_deleteTems_Click" Grid.Column="2"/>
+                    <TextBox x:Name="TextBoxNameTems" HorizontalAlignment="Left" Margin="362,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="139" Height="20" Background="#FFA7A7A7" SelectionBrush="#FFF8C226" BorderBrush="#FFF8C226" SelectionTextBrush="#FFF8C226" Grid.Column="2"/>
+                    <Button x:Name="b_about" Grid.Column="2" Content="Изменить" HorizontalAlignment="Left" Margin="522,60,0,0" VerticalAlignment="Top" Width="107" Click="b_about_Click"/>
 
                 </Grid>
             </TabItem>

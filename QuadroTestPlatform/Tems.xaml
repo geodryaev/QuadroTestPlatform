@@ -1,0 +1,23 @@
+﻿<Window x:Class="QuadroTestPlatform.Tems"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:QuadroTestPlatform"
+        mc:Ignorable="d"
+        Title="Tems" Height="557" Width="1053">
+    <Grid Background="#FF585858">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="508*"/>
+            <ColumnDefinition Width="509*"/>
+        </Grid.ColumnDefinitions>
+        <TextBlock x:Name="tb_nameTems" HorizontalAlignment="Left" Margin="10,18,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="16" Width="0"/>
+        <Button x:Name="b_replace" Content="Изменить" HorizontalAlignment="Left" Margin="10,445,0,0" VerticalAlignment="Top" Width="172" Height="20" Grid.Column="1"/>
+        <Button x:Name="b_отмена" Content="Отенить" HorizontalAlignment="Left" Margin="10,445,0,0" VerticalAlignment="Top" Width="93" Height="20"/>
+        <TextBlock HorizontalAlignment="Center" Margin="0,18,0,0" TextWrapping="Wrap" Text="Ограничения на колчиество заданий в тесте" VerticalAlignment="Top" Grid.Column="1" Height="16" Width="246"/>
+        <TextBox x:Name="tb_countQMax" HorizontalAlignment="Center" Margin="0,39,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Grid.Column="1" Height="18"/>
+        <DataGrid x:Name="dg_question" AutoGenerateColumns="True" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="10,109,10,104" Grid.ColumnSpan="2"/>
+        <Button x:Name="b_createQuestion" Content="Создать" HorizontalAlignment="Left" Margin="326,445,0,0" VerticalAlignment="Top" Width="172" Click="b_createQuestion_Click" Height="20"/>
+        <Button Grid.Column="1" Content="Применить изменения" HorizontalAlignment="Left" Margin="341,445,0,0" VerticalAlignment="Top" Width="158"/>
+    </Grid>
+</Window>
