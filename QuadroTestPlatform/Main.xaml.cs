@@ -41,6 +41,7 @@ namespace QuadroTestPlatform
                 {
                     conn.Open();
                     SqlCommand comm = new SqlCommand();
+                    comm.CommandText =
                     comm.CommandText = "INSERT INTO t_tems (Name,CountQMax) VALUES (\'" + TextBoxNameTems.Text.ToString().Trim() + "\', 20)";
                     comm.Connection = conn;
                     comm.ExecuteNonQuery();
