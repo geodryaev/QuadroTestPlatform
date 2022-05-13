@@ -179,6 +179,14 @@ namespace QuadroTestPlatform
             return answer;
         }
 
+        private void Window_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            if(e.Key == System.Windows.Input.Key.Enter)
+            {
+                b_SetQuestion.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+            }
+        }
+
         public void SetCheak(CheckBox cb1, CheckBox cb2, CheckBox cb3, CheckBox cb4, CheckBox cb5, CheckBox cb6, string str)
         {
             if (str.Length == 0)

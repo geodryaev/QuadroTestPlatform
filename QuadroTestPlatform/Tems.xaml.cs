@@ -1,13 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
-using System.Data;
 using System.Windows;
 using System.Windows.Controls;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Data;
-using System.Windows.Controls.Primitives;
 
 namespace QuadroTestPlatform
 {
@@ -19,8 +14,8 @@ namespace QuadroTestPlatform
         public Tems(string nameT)
         {
             InitializeComponent();
-            tb_nameTems.Text = nameT;
             nameTems = nameT;
+            tb_nameTems.Text = nameT;
             using (SqlConnection connect = new SqlConnection(strSQLConnection()))
             {
                 connect.Open();
@@ -87,7 +82,7 @@ namespace QuadroTestPlatform
 
         private void b_replace_Click(object sender, RoutedEventArgs e)
         {
-            if (dg_question.SelectedItems.Count == 0) 
+            if (dg_question.SelectedItems.Count == 0)
                 return;
 
             cQuestion nq = (cQuestion)dg_question.SelectedItems[0];
@@ -110,9 +105,9 @@ namespace QuadroTestPlatform
                 command.Connection = connect;
                 command.CommandText = "SELECT * FROM t_question";
                 SqlDataReader read = command.ExecuteReader();
-                while(read.Read())
+                while (read.Read())
                 {
-                    if(read.GetString(2) == nq.Question)
+                    if (read.GetString(2) == nq.Question)
                     {
                         keyDelete = read.GetValue(0).ToString();
                     }
@@ -129,6 +124,26 @@ namespace QuadroTestPlatform
                 form.Show();
                 Close();
             }
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            using (SqlConnection connect = new SqlConnection(strSQLConnection()))
+            {
+                connect.Open();
+                SqlCommand commnad = new SqlCommand();
+                commnad.Connection = connect;
+                commnad.CommandText = "UPDATE t_tems SET CountQMax = '"+tb_countQMax.Text.Trim()+"' WHERE Id = " + keyTems.ToString();
+                SqlDataReader read = commnad.ExecuteReader();
+                read.Close();
+                connect.Close();
+            }
+        }
+
+        private void Window_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            if (e.Key == System.Windows.Input.Key.F1)
+                b_createQuestion.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
         }
     }
 }
