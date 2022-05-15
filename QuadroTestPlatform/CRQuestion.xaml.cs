@@ -93,7 +93,6 @@ namespace QuadroTestPlatform
                                 SqlCommand command = new SqlCommand();
                                 command.Connection = connect;
                                 command.CommandText = "UPDATE t_answer SET ans1 = '" + tb_answer1.Text.ToString().Trim() + "',ans2 = '" + tb_answer2.Text.ToString().Trim() + "',ans3 = '" + tb_answer3.Text.ToString().Trim() + "',ans4 = '" + tb_answer4.Text.ToString().Trim() + "',ans5 = '" + tb_answer5.Text.ToString().Trim() + "',ans6 = '" + tb_answer6.Text.ToString().Trim() + "', numberTrue = '" + getNumberTrueAnswer() + "' WHERE qKey = " + keyQuestion;
-                                MessageBox.Show(command.CommandText);
                                 SqlDataReader read =  command.ExecuteReader();
                                 connect.Close();
                                 Close();

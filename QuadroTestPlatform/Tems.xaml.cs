@@ -27,8 +27,11 @@ namespace QuadroTestPlatform
                 {
                     if (read.GetValue(1).ToString() == nameTems)
                     {
-                        tb_countQMax.Text = read.GetValue(2).ToString();
+                        tb_countQMax.Text = read.GetValue(5).ToString();
                         keyTems = Convert.ToInt32(read.GetValue(0));
+                        tb_tree.Text = read.GetValue(2).ToString();
+                        tb_four.Text = read.GetValue(3).ToString();
+                        tb_five.Text = read.GetValue(4).ToString();
                     }
 
                 }
@@ -133,10 +136,11 @@ namespace QuadroTestPlatform
                 connect.Open();
                 SqlCommand commnad = new SqlCommand();
                 commnad.Connection = connect;
-                commnad.CommandText = "UPDATE t_tems SET CountQMax = '"+tb_countQMax.Text.Trim()+"' WHERE Id = " + keyTems.ToString();
+                commnad.CommandText = "UPDATE t_tems SET CountQMax = '" + tb_countQMax.Text.Trim() + "', tree = '" + tb_tree.Text.Trim() + "', four = '" + tb_four.Text.Trim() + "', five = '" + tb_five.Text.Trim() + "' WHERE Id = " + keyTems.ToString();
                 SqlDataReader read = commnad.ExecuteReader();
                 read.Close();
                 connect.Close();
+                Close();
             }
         }
 

@@ -5,18 +5,18 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:QuadroTestPlatform"
         mc:Ignorable="d"
-        Title="QTP Вопросы" Height="557" Width="1053" KeyDown="Window_KeyDown">
+        Title="QTP Вопросы" Height="674" Width="1053" KeyDown="Window_KeyDown">
     <Grid Background="#FF585858">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="508*"/>
             <ColumnDefinition Width="509*"/>
         </Grid.ColumnDefinitions>
         <TextBlock x:Name="tb_nameTems" HorizontalAlignment="Center" Margin="0,18,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="16" Width="506" Text="" TextAlignment="Center"/>
-        <Button x:Name="b_replace" Content="Изменить" HorizontalAlignment="Left" Margin="10,445,0,0" VerticalAlignment="Top" Width="172" Height="20" Grid.Column="1" Click="b_replace_Click"/>
-        <Button x:Name="b_отмена" Content="Отенить" HorizontalAlignment="Left" Margin="10,445,0,0" VerticalAlignment="Top" Width="93" Height="20"/>
+        <Button x:Name="b_replace" Content="Изменить" HorizontalAlignment="Left" Margin="10,563,0,0" VerticalAlignment="Top" Width="172" Height="20" Grid.Column="1" Click="b_replace_Click"/>
+        <Button x:Name="b_отмена" Content="Отенить" HorizontalAlignment="Left" Margin="10,563,0,0" VerticalAlignment="Top" Width="93" Height="20"/>
         <TextBlock HorizontalAlignment="Center" Margin="0,18,0,0" TextWrapping="Wrap" Text="Ограничения на колчиество заданий в тесте" VerticalAlignment="Top" Grid.Column="1" Height="16" Width="246"/>
-        <TextBox x:Name="tb_countQMax" HorizontalAlignment="Center" Margin="0,39,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Grid.Column="1" Height="18"/>
-        <DataGrid  x:Name="dg_question"  IsReadOnly="True" LoadingRow="dg_question_LoadingRow" AutoGenerateColumns="False" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="10,109,10,104" Grid.ColumnSpan="2">
+        <TextBox x:Name="tb_countQMax" TextAlignment="Center" HorizontalAlignment="Center" Margin="0,39,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Grid.Column="1" Height="18"/>
+        <DataGrid  x:Name="dg_question"  IsReadOnly="True" LoadingRow="dg_question_LoadingRow" AutoGenerateColumns="False" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="10,206,10,149" Grid.ColumnSpan="2">
             <DataGrid.ColumnHeaderStyle>
                 <Style TargetType="DataGridColumnHeader">
                     <Setter Property="FontSize" Value="20"/>
@@ -31,8 +31,15 @@
                 <DataGridTextColumn  IsReadOnly="True" Header="Вопрос"  Width="950" Binding="{Binding Question}"></DataGridTextColumn>
             </DataGrid.Columns>
         </DataGrid>
-        <Button x:Name="b_createQuestion" Content="Создать" HorizontalAlignment="Left" Margin="326,445,0,0" VerticalAlignment="Top" Width="172" Click="b_createQuestion_Click" Height="20"/>
-        <Button Grid.Column="1" Content="Применить изменения" HorizontalAlignment="Left" Margin="341,445,0,0" VerticalAlignment="Top" Width="158" Click="Button_Click"/>
-        <Button x:Name="b_deleteQ" Content="Удалить" HorizontalAlignment="Left" Margin="440,479,0,0" VerticalAlignment="Top" Width="172" Grid.ColumnSpan="2" Click="b_deleteQ_Click"/>
+        <Button x:Name="b_createQuestion" Content="Создать" HorizontalAlignment="Left" Margin="326,563,0,0" VerticalAlignment="Top" Width="172" Click="b_createQuestion_Click" Height="20"/>
+        <Button Grid.Column="1" Content="Применить изменения" HorizontalAlignment="Left" Margin="341,563,0,0" VerticalAlignment="Top" Width="158" Click="Button_Click"/>
+        <Button x:Name="b_deleteQ" Content="Удалить" HorizontalAlignment="Left" Margin="440,597,0,0" VerticalAlignment="Top" Width="172" Grid.ColumnSpan="2" Click="b_deleteQ_Click"/>
+        <TextBox x:Name="tb_tree" TextAlignment="Center" Grid.Column="1" HorizontalAlignment="Left" Margin="140,148,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="50"/>
+        <TextBox x:Name="tb_four" TextAlignment="Center" Grid.Column="1" HorizontalAlignment="Center" Margin="0,148,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="50"/>
+        <TextBox x:Name="tb_five" TextAlignment="Center" Grid.Column="1" HorizontalAlignment="Left" Margin="336,148,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="50"/>
+        <TextBlock Grid.Column="1" HorizontalAlignment="Left" Margin="162,171,0,0" TextWrapping="Wrap" Text="3" VerticalAlignment="Top" RenderTransformOrigin="-0.167,0.436"/>
+        <TextBlock Grid.Column="1" HorizontalAlignment="Center" Margin="0,171,0,0" TextWrapping="Wrap" Text="4" VerticalAlignment="Top" RenderTransformOrigin="-0.167,0.436"/>
+        <TextBlock Grid.Column="1" HorizontalAlignment="Left" Margin="358,171,0,0" TextWrapping="Wrap" Text="5" VerticalAlignment="Top" RenderTransformOrigin="-0.167,0.436"/>
+        <TextBlock Grid.Column="1" HorizontalAlignment="Center" Margin="0,122,0,0" TextWrapping="Wrap" Text="Количество ошибок для оценивания" VerticalAlignment="Top" Width="208"/>
     </Grid>
 </Window>

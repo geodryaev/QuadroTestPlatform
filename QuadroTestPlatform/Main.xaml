@@ -7,9 +7,6 @@
         mc:Ignorable="d"
         Title="QTP 1.0" Height="450" Width="800">
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-        </Grid.ColumnDefinitions>
         <TabControl Background="#FF585858" BorderBrush="#FF585858">
             <TabItem Header="Просмотр тестов">
                 <TabItem.Background>
@@ -20,18 +17,35 @@
                 </TabItem.Background>
                 <Grid Background="#FF585858">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="21*"/>
-                        <ColumnDefinition Width="133*"/>
-                        <ColumnDefinition Width="639*"/>
+                        <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
-                    <TextBlock Margin="2,0,446,292" Grid.ColumnSpan="2" Grid.Column="1">Темы тестирования</TextBlock>
-                    <TreeView x:Name="TemsTree" Width="200" Margin="10,20,0,0" Background="#FF585858" BorderBrush="#FF585858" HorizontalAlignment="Left" Grid.ColumnSpan="3">
-                        
-                    </TreeView>
-                    <Button x:Name="b_addtems" Content="Добавить тему" HorizontalAlignment="Left" Margin="522,10,0,0" VerticalAlignment="Top" Click="Button_Click" Width="107" Grid.Column="2"/>
-                    <Button x:Name="b_deleteTems" Content="Удалить тему" HorizontalAlignment="Left" Margin="522,35,0,0" VerticalAlignment="Top" Width="107" Click="b_deleteTems_Click" Grid.Column="2"/>
-                    <TextBox x:Name="TextBoxNameTems" HorizontalAlignment="Left" Margin="362,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="139" Height="20" Background="#FFA7A7A7" SelectionBrush="#FFF8C226" BorderBrush="#FFF8C226" SelectionTextBrush="#FFF8C226" Grid.Column="2"/>
-                    <Button x:Name="b_about" Grid.Column="2" Content="Изменить" HorizontalAlignment="Left" Margin="522,60,0,0" VerticalAlignment="Top" Width="107" Click="b_about_Click"/>
+                    <TextBlock Margin="23,0,446,292">Темы тестирования</TextBlock>
+                    <TreeView x:Name="TemsTree" Width="200" Margin="10,20,0,0" Background="#FF585858" BorderBrush="#FF585858" HorizontalAlignment="Left"/>
+                    <Button x:Name="b_addtems" Content="Добавить тему" HorizontalAlignment="Left" Margin="676,10,0,0" VerticalAlignment="Top" Click="Button_Click" Width="107"/>
+                    <Button x:Name="b_deleteTems" Content="Удалить тему" HorizontalAlignment="Left" Margin="676,35,0,0" VerticalAlignment="Top" Width="107" Click="b_deleteTems_Click"/>
+                    <TextBox x:Name="TextBoxNameTems" HorizontalAlignment="Left" Margin="516,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="139" Height="20" Background="#FFA7A7A7" SelectionBrush="#FFF8C226" BorderBrush="#FFF8C226" SelectionTextBrush="#FFF8C226"/>
+                    <Button x:Name="b_about" Content="Изменить" HorizontalAlignment="Left" Margin="676,60,0,0" VerticalAlignment="Top" Width="107" Click="b_about_Click"/>
+
+                </Grid>
+            </TabItem>
+            <TabItem Header="Выбираемые данные">
+                <TabItem.Background>
+                    <LinearGradientBrush EndPoint="0,1">
+                        <GradientStop Color="#FFF0F0F0"/>
+                        <GradientStop Color="#FF585858" Offset="1"/>
+                    </LinearGradientBrush>
+                </TabItem.Background>
+                <Grid Background="#FF585858">
+                    <TextBlock HorizontalAlignment="Left" Margin="27,10,0,0" TextWrapping="Wrap" Text="Подразделения" VerticalAlignment="Top"/>
+                    <TextBlock HorizontalAlignment="Left" Margin="678,10,0,0" TextWrapping="Wrap" Text="Учебные группы" VerticalAlignment="Top"/>
+                    <ComboBox x:Name="cb_Unit" HorizontalAlignment="Left" Margin="10,31,0,0" VerticalAlignment="Top" Width="120"/>
+                    <Button x:Name="b_createUnit" Content="Добавить" HorizontalAlignment="Left" Margin="157,64,0,0" VerticalAlignment="Top" Width="120" Click="b_createUnit_Click"/>
+                    <Button x:Name="b_deleteUnit" Content="Удалить" HorizontalAlignment="Left" Margin="10,64,0,0" VerticalAlignment="Top" Width="120" Click="b_deleteUnit_Click"/>
+                    <TextBox x:Name="tb_nameUnit" HorizontalAlignment="Left" Margin="157,31,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="22"/>
+                    <ComboBox x:Name="cb_groupe" HorizontalAlignment="Left" Margin="664,31,0,0" VerticalAlignment="Top" Width="120"/>
+                    <TextBox x:Name="tb_groupe" HorizontalAlignment="Left" Margin="525,31,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="22"/>
+                    <Button x:Name="b_deleteGroupe" Content="Удалить" HorizontalAlignment="Left" Margin="664,64,0,0" VerticalAlignment="Top" Width="120" Click="b_deleteGroupe_Click"/>
+                    <Button x:Name="b_createGroupe" Content="Добавить" HorizontalAlignment="Left" Margin="525,64,0,0" VerticalAlignment="Top" Width="120" Click="b_createGroupe_Click"/>
 
                 </Grid>
             </TabItem>
@@ -51,6 +65,8 @@
                     <Button x:Name="b_createTableDB" Content="Создать таблицы" HorizontalAlignment="Left" Margin="611,0,0,0" VerticalAlignment="Center" Height="22" Width="145" Click="b_createTableDB_Click"/>
                 </Grid>
             </TabItem>
+
+
         </TabControl>
 
     </Grid>
