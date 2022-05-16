@@ -65,6 +65,7 @@ namespace QuadroTestPlatform
                     refresh();
                 }
             }
+            TextBoxNameTems.Text = ""; 
         }
 
         private void b_deleteTems_Click(object sender, RoutedEventArgs e)
