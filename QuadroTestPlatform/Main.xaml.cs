@@ -180,6 +180,7 @@ namespace QuadroTestPlatform
                     com.CommandText = "INSERT t_zvezda VALUES ('Полковник')";
                     com.ExecuteNonQuery();
                     com.CommandText = "INSERT t_zvezda VALUES ('Капитан первого ранга')";
+                    com.ExecuteNonQuery();
                     connect.Close();
                 }
                 try
@@ -214,6 +215,24 @@ namespace QuadroTestPlatform
                 {
                     SqlCommand com = new SqlCommand();
                     com.CommandText = "CREATE TABLE t_numberGroupe (Id INT PRIMARY KEY IDENTITY, numberGroupe NVARCHAR (1000))";
+                    com.Connection = connect;
+                    com.ExecuteNonQuery();
+                    connect.Close();
+                }
+                try
+                {
+                    connect.Open();
+                    SqlCommand com = new SqlCommand();
+                    com.CommandText = "SELECT * FROM t_result";
+                    com.Connection = connect;
+                    com.ExecuteNonQuery();
+                    connect.Close();
+
+                }
+                catch
+                {
+                    SqlCommand com = new SqlCommand();
+                    com.CommandText = "CREATE TABLE t_result (Id INT PRIMARY KEY IDENTITY, Unit NVARCHAR (1000), numberUnit NVARCHAR (1000), zvezda NVARCHAR (1000), Name NVARCHAR (1000), data NVARCHAR (1000), g1 NVARCHAR (1000), g2 NVARCHAR (1000))";
                     com.Connection = connect;
                     com.ExecuteNonQuery();
                     connect.Close();
