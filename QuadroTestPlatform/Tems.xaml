@@ -41,5 +41,7 @@
         <TextBlock Grid.Column="1" HorizontalAlignment="Center" Margin="0,171,0,0" TextWrapping="Wrap" Text="4" VerticalAlignment="Top" RenderTransformOrigin="-0.167,0.436"/>
         <TextBlock Grid.Column="1" HorizontalAlignment="Left" Margin="358,171,0,0" TextWrapping="Wrap" Text="5" VerticalAlignment="Top" RenderTransformOrigin="-0.167,0.436"/>
         <TextBlock Grid.Column="1" HorizontalAlignment="Center" Margin="0,122,0,0" TextWrapping="Wrap" Text="Количество ошибок для оценивания" VerticalAlignment="Top" Width="208"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,514,0,0" TextWrapping="Wrap" Text="Время на оин вопрос" VerticalAlignment="Top"/>
+        <TextBox x:Name="tb_time" TextAlignment="Center"  HorizontalAlignment="Left" Margin="133,514,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="49"/>
     </Grid>
 </Window>

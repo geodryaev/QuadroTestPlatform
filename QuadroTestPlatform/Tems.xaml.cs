@@ -32,6 +32,7 @@ namespace QuadroTestPlatform
                         tb_tree.Text = read.GetValue(2).ToString();
                         tb_four.Text = read.GetValue(3).ToString();
                         tb_five.Text = read.GetValue(4).ToString();
+                        tb_time.Text = read.GetValue(6).ToString();
                     }
 
                 }
@@ -136,7 +137,7 @@ namespace QuadroTestPlatform
                 connect.Open();
                 SqlCommand commnad = new SqlCommand();
                 commnad.Connection = connect;
-                commnad.CommandText = "UPDATE t_tems SET CountQMax = '" + tb_countQMax.Text.Trim() + "', tree = '" + tb_tree.Text.Trim() + "', four = '" + tb_four.Text.Trim() + "', five = '" + tb_five.Text.Trim() + "' WHERE Id = " + keyTems.ToString();
+                commnad.CommandText = "UPDATE t_tems SET CountQMax = '" + tb_countQMax.Text.Trim() + "', tree = '" + tb_tree.Text.Trim() + "', four = '" + tb_four.Text.Trim() + "', five = '" + tb_five.Text.Trim() + "', time = '" + tb_time.Text.ToString().Trim() + "' WHERE Id = " + keyTems.ToString();
                 SqlDataReader read = commnad.ExecuteReader();
                 read.Close();
                 connect.Close();

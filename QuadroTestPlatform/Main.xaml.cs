@@ -58,7 +58,7 @@ namespace QuadroTestPlatform
                     conn.Open();
                     SqlCommand comm = new SqlCommand();
                     comm.CommandText =
-                    comm.CommandText = "INSERT INTO t_tems (Name, tree, four, five, CountQMax) VALUES (\'" + TextBoxNameTems.Text.ToString().Trim() + "\', 3, 2, 1, 20)";
+                    comm.CommandText = "INSERT INTO t_tems (Name, tree, four, five, CountQMax, time) VALUES (\'" + TextBoxNameTems.Text.ToString().Trim() + "\', 3, 2, 1, 20, 3)";
                     comm.Connection = conn;
                     comm.ExecuteNonQuery();
                     conn.Close();
@@ -102,7 +102,7 @@ namespace QuadroTestPlatform
                 catch
                 {
                     SqlCommand com = new SqlCommand();
-                    com.CommandText = "CREATE TABLE t_tems (Id INT PRIMARY KEY IDENTITY, Name NVARCHAR(1000), tree  NVARCHAR (1000), four  NVARCHAR (1000), five  NVARCHAR (1000), CountQMax NVARCHAR (1000))";
+                    com.CommandText = "CREATE TABLE t_tems (Id INT PRIMARY KEY IDENTITY, Name NVARCHAR(1000), tree  NVARCHAR (1000), four  NVARCHAR (1000), five  NVARCHAR (1000), CountQMax NVARCHAR (1000), time NVARCHAR (1000))";
                     com.Connection = connect;
                     com.ExecuteNonQuery();
                     connect.Close();
