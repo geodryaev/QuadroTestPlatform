@@ -121,7 +121,7 @@ namespace QuadroTestPlatform
                 catch
                 {
                     SqlCommand com = new SqlCommand();
-                    com.CommandText = "CREATE TABLE t_question (Id INT PRIMARY KEY IDENTITY, tKey INT NOT NULL, Question NVARCHAR (1000))";
+                    com.CommandText = "CREATE TABLE t_question (Id INT PRIMARY KEY IDENTITY, tKey INT NOT NULL, aKey NVARCHAR (1000), Question NVARCHAR (1000))";
                     com.Connection = connect;
                     com.ExecuteNonQuery();
                     connect.Close();
@@ -139,7 +139,7 @@ namespace QuadroTestPlatform
                 catch
                 {
                     SqlCommand com = new SqlCommand();
-                    com.CommandText = "CREATE TABLE t_answer (Id INT PRIMARY KEY IDENTITY, qKey INT, ans1 NVARCHAR (1000),ans2 NVARCHAR (1000),ans3 NVARCHAR (1000),ans4 NVARCHAR (1000),ans5 NVARCHAR (1000),ans6 NVARCHAR (1000), numberTrue INT)";
+                    com.CommandText = "CREATE TABLE t_answer (Id INT PRIMARY KEY IDENTITY, qKey INT, answer NVARCHAR (1000))";
                     com.Connection = connect;
                     com.ExecuteNonQuery();
                     connect.Close();

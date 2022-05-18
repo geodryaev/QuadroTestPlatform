@@ -48,7 +48,7 @@ namespace QuadroTestPlatform
                     if (read.GetValue(1).ToString() == keyTems.ToString().Trim())
                     {
                         cQuestion a = new cQuestion();
-                        a.Question = read.GetValue(2).ToString().Trim();
+                        a.Question = read.GetValue(3).ToString().Trim();
                         q.Add(a);
                         numCol++;
                     }
@@ -111,7 +111,7 @@ namespace QuadroTestPlatform
                 SqlDataReader read = command.ExecuteReader();
                 while (read.Read())
                 {
-                    if (read.GetString(2) == nq.Question)
+                    if (read.GetString(3) == nq.Question)
                     {
                         keyDelete = read.GetValue(0).ToString();
                     }

@@ -6,8 +6,7 @@ namespace QuadroTestPlatform
 {
     public partial class CRQuestion : Window
     {
-        bool errorNameQ;
-        bool isReplace;
+        bool errorNameQ, isReplace;
         int keyTem;
         string keyQuestion, nameTems;
         public CRQuestion(int key_tems, string nameT)
@@ -71,7 +70,7 @@ namespace QuadroTestPlatform
                     SqlDataReader read = command.ExecuteReader();
                     while (read.Read())
                     {
-                        if (read.GetValue(2).ToString() == tb_nameQuestion.Text)
+                        if (read.GetValue(3).ToString() == tb_nameQuestion.Text)
                         {
                             errorNameQ = true;
                         }
@@ -102,23 +101,42 @@ namespace QuadroTestPlatform
                         {
                             if(!errorNameQ)
                             {
+
                                 using (SqlConnection connect = new SqlConnection(strSQLConnection()))
                                 {
+                                    string buf1 ,aKey ="";
+                                    
                                     connect.Open();
                                     SqlCommand command = new SqlCommand();
                                     command.Connection = connect;
-                                    command.CommandText = "INSERT INTO t_question (tKey,Question) VALUES (" + keyTem.ToString() + ", \'" + tb_nameQuestion.Text.ToString().Trim() + "\')";
+                                    command.CommandText = "INSERT INTO t_question (tKey, Question) VALUES (" + keyTem.ToString() + ", \'" + tb_nameQuestion.Text.ToString().Trim() + "\')";
                                     command.ExecuteNonQuery();
-
                                     command.CommandText = "SELECT * FROM t_question";
                                     SqlDataReader read = command.ExecuteReader();
                                     while (read.Read())
                                     {
-                                        if (read.GetValue(2).ToString() == tb_nameQuestion.Text.ToString().Trim())
+                                        if (read.GetValue(3).ToString() == tb_nameQuestion.Text.ToString().Trim())
                                             keyQuestion = read.GetValue(0).ToString();
                                     }
                                     read.Close();
-                                    command.CommandText = "INSERT INTO t_answer (qkey,ans1, ans2, ans3, ans4, ans5, ans6, numberTrue) VALUES ( '" + keyQuestion + "', '" + tb_answer1.Text.ToString().Trim() + "', '" + tb_answer2.Text.ToString().Trim() + "', '" + tb_answer3.Text.ToString().Trim() + "', '" + tb_answer4.Text.ToString().Trim() + "', '" + tb_answer5.Text.ToString().Trim() + "', '" + tb_answer6.Text.ToString().Trim() + "', '" + getNumberTrueAnswer() + "')";
+                                    SetAnswer(tb_answer1.Text.Trim(), tb_answer2.Text.Trim(), tb_answer3.Text.Trim(), tb_answer4.Text.Trim(), tb_answer5.Text.Trim(), tb_answer6.Text.Trim(), keyQuestion);
+                                    
+                                    for(int i = 0; i <6;i++)
+                                    {
+                                        buf1 = GetStringAnswer();
+                                        if (buf1 != "QTP error 12")
+                                        {
+                                            command.CommandText = "SELECT * FROM t_answer";
+                                            read = command.ExecuteReader();
+                                            while(read.Read())
+                                            {
+                                                if (read.GetValue(2).ToString() == buf1 && keyQuestion == read.GetValue(1).ToString())
+                                                    aKey += read.GetValue(0) + "|";
+                                            }
+                                            read.Close();
+                                        }
+                                    }
+                                    command.CommandText = "UPDATE t_question SET aKey = '" + aKey+ "' WHERE Id = " + keyQuestion;
                                     command.ExecuteNonQuery();
                                     connect.Close();
                                     Tems t = new Tems(nameTems);
@@ -220,6 +238,87 @@ namespace QuadroTestPlatform
             }
             return;
         }
+        public void SetAnswer (string str1, string str2, string str3, string str4, string str5, string str6, string qKey)
+        {
+            using (SqlConnection con = new SqlConnection (strSQLConnection()))
+            {
+                con.Open();
+                SqlCommand com = new SqlCommand();
+                com.Connection = con;
+                if (str1 != null && str1.Length != 0)
+                {
+                    com.CommandText = "INSERT INTO t_answer (qKey, answer) VALUES ('" + qKey + "', '" + str1 + "')";
+                    com.ExecuteNonQuery();
+                }
+                if (str2 != null && str2.Length != 0)
+                {
+                    com.CommandText = "INSERT INTO t_answer (qKey, answer) VALUES ('" + qKey + "', '" + str2 + "')";
+                    com.ExecuteNonQuery();
+                }
+                if (str3 != null && str3.Length != 0)
+                {
+                    com.CommandText = "INSERT INTO t_answer (qKey, answer) VALUES ('" + qKey + "', '" + str3 + "')";
+                    com.ExecuteNonQuery();
+                }
+                if (str4 != null && str4.Length != 0)
+                {
+                    com.CommandText = "INSERT INTO t_answer (qKey, answer) VALUES ('" + qKey + "', '" + str4 + "')";
+                    com.ExecuteNonQuery();
+                }
+                if (str5 != null && str5.Length != 0)
+                {
+                    com.CommandText = "INSERT INTO t_answer (qKey, answer) VALUES ('" + qKey + "', '" + str5 + "')";
+                    com.ExecuteNonQuery();
+                }
+                if (str6 != null && str6.Length != 0)
+                {
+                    com.CommandText = "INSERT INTO t_answer (qKey, answer) VALUES ('" + qKey + "', '" + str6 + "')";
+                    com.ExecuteNonQuery();
+                }
+                con.Close();
+            }
+        }
+        public string GetStringAnswer()
+        {
+            string outp = "QTP error 12";
+            if(cb_true1.IsChecked == true)
+            {
+                cb_true1.IsChecked = false;
+                return tb_answer1.Text.Trim();
+            }
+            if (cb_true2.IsChecked == true)
+            {
+                cb_true2.IsChecked = false;
+                return tb_answer2.Text.Trim();
+            }
+            if (cb_true3.IsChecked == true)
+            {
+                cb_true3.IsChecked = false;
+                return tb_answer3.Text.Trim();
+            }
+            if (cb_true4.IsChecked == true)
+            {
+                cb_true4.IsChecked = false;
+                return tb_answer4.Text.Trim();
+            }
+            if (cb_true4.IsChecked == true)
+            {
+                cb_true4.IsChecked = false;
+                return tb_answer5.Text.Trim();
+            }
+            if (cb_true5.IsChecked == true)
+            {
+                cb_true5.IsChecked = false;
+                return tb_answer6.Text.Trim();
+            }
+            if (cb_true6.IsChecked == true)
+            {
+                cb_true6.IsChecked = false;
+                return tb_answer6.Text.Trim();
+            }
 
+
+            return outp;
+        }
     }
 }
