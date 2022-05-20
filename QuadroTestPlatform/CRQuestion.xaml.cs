@@ -1,4 +1,5 @@
-﻿using System.Data.SqlClient;
+﻿using System;
+using System.Data.SqlClient;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -6,21 +7,88 @@ namespace QuadroTestPlatform
 {
     public partial class CRQuestion : Window
     {
+        answerCH[] myArray;
         bool errorNameQ, isReplace;
         int keyTem;
         string keyQuestion, nameTems;
+        string[] idAnswer = new string[6];
         public CRQuestion(int key_tems, string nameT)
         {
             isReplace = false;
             keyTem = key_tems;
             InitializeComponent();
+            myArray = new answerCH[6];
+            myArray[0].textBox = tb_answer1;
+            myArray[0].checkBox = cb_true1;
+            myArray[1].textBox = tb_answer2;
+            myArray[1].checkBox = cb_true2;
+            myArray[2].textBox = tb_answer3;
+            myArray[2].checkBox = cb_true3;
+            myArray[3].textBox = tb_answer4;
+            myArray[3].checkBox = cb_true4;
+            myArray[4].textBox = tb_answer5;
+            myArray[4].checkBox = cb_true5;
+            myArray[5].textBox = tb_answer6;
+            myArray[5].checkBox = cb_true6;
             nameTems = nameT;
+
+            //using (SqlConnection connect = new SqlConnection(strSQLConnection()))
+            //{
+            //    connect.Open();
+            //    SqlCommand command = new SqlCommand();
+            //    command.Connection = connect;
+            //    command.CommandText = "SELECT * FROM t_question";
+            //    SqlDataReader read = command.ExecuteReader();
+            //    while(read.Read())
+            //    {
+            //        if(read.GetValue(3).ToString() == nameTems)
+            //    }
+
+
+            //    connect.Close();
+            //}
+
+            //    using (SqlConnection connect = new SqlConnection(strSQLConnection()))
+            //{
+            //    connect.Open();
+            //    SqlCommand command = new SqlCommand();
+            //    command.Connection = connect;
+            //    command.CommandText = "SELECT * FROM t_answer";
+            //    SqlDataReader read = command.ExecuteReader();
+            //    while (read.Read())
+            //    {
+            //        if(read.GetValue(1).ToString() == keyQuestion)
+            //        {
+            //            for (int i = 0; i < 6; i++)
+            //            {
+
+            //            }
+            //        }
+            //    }
+
+            //    connect.Close();
+            //}
         }
+
         public CRQuestion(string nameQustion)
         {
             isReplace = true;
             InitializeComponent();
-
+            myArray = new answerCH[6];
+            myArray[0].textBox  = tb_answer1;
+            myArray[0].checkBox = cb_true1;
+            myArray[1].textBox  = tb_answer2;
+            myArray[1].checkBox = cb_true2;
+            myArray[2].textBox  = tb_answer3;
+            myArray[2].checkBox = cb_true3;
+            myArray[3].textBox  = tb_answer4;
+            myArray[3].checkBox = cb_true4;
+            myArray[4].textBox  = tb_answer5;
+            myArray[4].checkBox = cb_true5;
+            myArray[5].textBox  = tb_answer6;
+            myArray[5].checkBox = cb_true6;
+            
+            string[] answerTrue = null;
             b_SetQuestion.Content = "Обновить";
             using (SqlConnection connect = new SqlConnection(strSQLConnection()))
             {
@@ -32,26 +100,31 @@ namespace QuadroTestPlatform
 
                 while (read.Read())
                 {
-                    if (read.GetValue(2).ToString() == nameQustion)
+                    if (read.GetValue(3).ToString() == nameQustion)
                     {
-                        tb_nameQuestion.Text = read.GetString(2);
+                        tb_nameQuestion.Text = read.GetString(3);
                         keyQuestion = read.GetValue(0).ToString();
+                        answerTrue = GetArrayTrueAnswer(read.GetValue(2).ToString());
                     }
                 }
                 command.CommandText = "SELECT * FROM t_answer";
                 read.Close();
                 read = command.ExecuteReader();
+                TextBox[] t = new TextBox[6];
+                t[0] = tb_answer1;
+                t[1] = tb_answer2;
+                t[2] = tb_answer3;
+                t[3] = tb_answer4;
+                t[4] = tb_answer5;
+                t[5] = tb_answer6;
+                int countTB = 0;
                 while (read.Read())
                 {
                     if (keyQuestion == read.GetValue(1).ToString())
                     {
-                        tb_answer1.Text = read.GetValue(2).ToString();
-                        tb_answer2.Text = read.GetValue(3).ToString();
-                        tb_answer3.Text = read.GetValue(4).ToString();
-                        tb_answer4.Text = read.GetValue(5).ToString();
-                        tb_answer5.Text = read.GetValue(6).ToString();
-                        tb_answer6.Text = read.GetValue(7).ToString();
-                        SetCheak(cb_true1, cb_true2, cb_true3, cb_true4, cb_true5, cb_true6, read.GetValue(8).ToString());
+                        t[countTB].Text = read.GetValue(2).ToString();
+                        countTB++;
+                        SetCheak(answerTrue);
                     }
 
                 }
@@ -92,20 +165,20 @@ namespace QuadroTestPlatform
                                 SqlCommand command = new SqlCommand();
                                 command.Connection = connect;
                                 command.CommandText = "UPDATE t_answer SET ans1 = '" + tb_answer1.Text.ToString().Trim() + "',ans2 = '" + tb_answer2.Text.ToString().Trim() + "',ans3 = '" + tb_answer3.Text.ToString().Trim() + "',ans4 = '" + tb_answer4.Text.ToString().Trim() + "',ans5 = '" + tb_answer5.Text.ToString().Trim() + "',ans6 = '" + tb_answer6.Text.ToString().Trim() + "', numberTrue = '" + getNumberTrueAnswer() + "' WHERE qKey = " + keyQuestion;
-                                SqlDataReader read =  command.ExecuteReader();
+                                SqlDataReader read = command.ExecuteReader();
                                 connect.Close();
                                 Close();
                             }
                         }
                         else
                         {
-                            if(!errorNameQ)
+                            if (!errorNameQ)
                             {
 
                                 using (SqlConnection connect = new SqlConnection(strSQLConnection()))
                                 {
-                                    string buf1 ,aKey ="";
-                                    
+                                    string buf1, aKey = "";
+
                                     connect.Open();
                                     SqlCommand command = new SqlCommand();
                                     command.Connection = connect;
@@ -120,15 +193,15 @@ namespace QuadroTestPlatform
                                     }
                                     read.Close();
                                     SetAnswer(tb_answer1.Text.Trim(), tb_answer2.Text.Trim(), tb_answer3.Text.Trim(), tb_answer4.Text.Trim(), tb_answer5.Text.Trim(), tb_answer6.Text.Trim(), keyQuestion);
-                                    
-                                    for(int i = 0; i <6;i++)
+
+                                    for (int i = 0; i < 6; i++)
                                     {
                                         buf1 = GetStringAnswer();
                                         if (buf1 != "QTP error 12")
                                         {
                                             command.CommandText = "SELECT * FROM t_answer";
                                             read = command.ExecuteReader();
-                                            while(read.Read())
+                                            while (read.Read())
                                             {
                                                 if (read.GetValue(2).ToString() == buf1 && keyQuestion == read.GetValue(1).ToString())
                                                     aKey += read.GetValue(0) + "|";
@@ -136,7 +209,7 @@ namespace QuadroTestPlatform
                                             read.Close();
                                         }
                                     }
-                                    command.CommandText = "UPDATE t_question SET aKey = '" + aKey+ "' WHERE Id = " + keyQuestion;
+                                    command.CommandText = "UPDATE t_question SET aKey = '" + aKey + "' WHERE Id = " + keyQuestion;
                                     command.ExecuteNonQuery();
                                     connect.Close();
                                     Tems t = new Tems(nameTems);
@@ -147,8 +220,8 @@ namespace QuadroTestPlatform
                             else
                             {
                                 MessageBox.Show("Такой вопрос уже существет");
-                            } 
-                                
+                            }
+
                         }
                     }
                     else
@@ -195,52 +268,42 @@ namespace QuadroTestPlatform
                 answer += "6";
             return answer;
         }
-
         private void Window_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
         {
-            if(e.Key == System.Windows.Input.Key.Enter)
+            if (e.Key == System.Windows.Input.Key.Enter)
             {
                 b_SetQuestion.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
             }
         }
-
-        public void SetCheak(CheckBox cb1, CheckBox cb2, CheckBox cb3, CheckBox cb4, CheckBox cb5, CheckBox cb6, string str)
+        public void SetCheak(string[] str)
         {
             if (str.Length == 0)
                 return;
 
+
             for (int i = 0; i < str.Length; i++)
             {
-                switch (str[i])
+                using (SqlConnection con = new SqlConnection(strSQLConnection()))
                 {
-                    case '1':
-                        cb1.IsChecked = true;
-                        break;
-                    case '2':
-                        cb2.IsChecked = true;
-                        break;
-                    case '3':
-                        cb3.IsChecked = true;
-                        break;
-                    case '4':
-                        cb4.IsChecked = true;
-                        break;
-                    case '5':
-                        cb5.IsChecked = true;
-                        break;
-                    case '6':
-                        cb6.IsChecked = true;
-                        break;
-
-                    default:
-                        break;
+                    con.Open();
+                    SqlCommand com = new SqlCommand();
+                    com.Connection = con;
+                    com.CommandText = "SELECT * FROM t_answer;";
+                    SqlDataReader reader = com.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        if (reader.GetValue(0).ToString() == str[i])
+                        {
+                            SetCheckOne(reader.GetValue(2).ToString());
+                        }
+                    }
                 }
             }
             return;
         }
-        public void SetAnswer (string str1, string str2, string str3, string str4, string str5, string str6, string qKey)
+        public void SetAnswer(string str1, string str2, string str3, string str4, string str5, string str6, string qKey)
         {
-            using (SqlConnection con = new SqlConnection (strSQLConnection()))
+            using (SqlConnection con = new SqlConnection(strSQLConnection()))
             {
                 con.Open();
                 SqlCommand com = new SqlCommand();
@@ -281,7 +344,7 @@ namespace QuadroTestPlatform
         public string GetStringAnswer()
         {
             string outp = "QTP error 12";
-            if(cb_true1.IsChecked == true)
+            if (cb_true1.IsChecked == true)
             {
                 cb_true1.IsChecked = false;
                 return tb_answer1.Text.Trim();
@@ -320,5 +383,47 @@ namespace QuadroTestPlatform
 
             return outp;
         }
+        public string[] GetArrayTrueAnswer(string str)
+        {
+            int count = 0;
+            for (int i = 0; i < str.Length; i++)
+            {
+                if (str[i] == '|')
+                    count++;
+            }
+            string[] arrayStr = new string[count];
+            count = 0;
+            for (int i = 0; i < str.Length; i++)
+            {
+                if (str[i] != '|')
+                {
+                    string buffer = "";
+                    while (i<str.Length && str[i])
+                    {
+
+                    }
+                    arrayStr[count] = Convert.ToString(str[i]);
+                    count++;
+                }
+            }
+
+            return arrayStr;
+        }
+        public void SetCheckOne(string str)
+        {
+            for (int i = 0; i < 6; i++)
+            {
+                if (myArray[i].textBox.Text == str)
+                {
+                    myArray[i].checkBox.IsChecked = true;
+                }
+            }
+        }
+        public struct answerCH
+        {
+            public CheckBox checkBox;
+            public TextBox textBox;
+        }
+
     }
 }
