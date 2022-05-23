@@ -90,7 +90,7 @@ namespace QuadroTestPlatform
                 return;
 
             cQuestion nq = (cQuestion)dg_question.SelectedItems[0];
-            CRQuestion form = new CRQuestion(nq.Question);
+            CRQuestion form = new CRQuestion(nq.Question, nameTems);
             form.Show();
             Close();
         }
