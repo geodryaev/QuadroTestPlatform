@@ -57,7 +57,6 @@ namespace QuadroTestPlatform
                 {
                     conn.Open();
                     SqlCommand comm = new SqlCommand();
-                    comm.CommandText =
                     comm.CommandText = "INSERT INTO t_tems (Name, tree, four, five, CountQMax, time) VALUES (\'" + TextBoxNameTems.Text.ToString().Trim() + "\', 3, 2, 1, 20, 3)";
                     comm.Connection = conn;
                     comm.ExecuteNonQuery();
@@ -71,6 +70,15 @@ namespace QuadroTestPlatform
         private void b_deleteTems_Click(object sender, RoutedEventArgs e)
         {
             TemsTree.Items.Remove(TemsTree.SelectedItem);
+            using (SqlConnection conn= new SqlConnection (strSQLConnection()))
+            {
+                conn.Open();
+                SqlCommand com = new SqlCommand();
+                com.CommandText = "DELETE t_tems WHERE Name = '" + TemsTree.SelectedItem.ToString()+"'";
+                com.Connection = conn;
+                com.ExecuteNonQuery();
+                conn.Close();
+            }
         }
 
         private void b_replacePathSQL_Click(object sender, RoutedEventArgs e)
