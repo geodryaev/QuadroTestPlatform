@@ -95,6 +95,7 @@ namespace QuadroTestPlatform
                 SetCheak(answerTrue);
             }
         }
+
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             errorNameQ = false;
@@ -108,7 +109,7 @@ namespace QuadroTestPlatform
                     SqlDataReader read = command.ExecuteReader();
                     while (read.Read())
                     {
-                        if (read.GetValue(3).ToString() == tb_nameQuestion.Text)
+                        if (read.GetValue(3).ToString() == tb_nameQuestion.Text && read.GetValue(1).ToString() == keyTem.ToString())
                         {
                             errorNameQ = true;
                         }

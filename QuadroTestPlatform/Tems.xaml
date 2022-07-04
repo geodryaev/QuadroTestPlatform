@@ -41,6 +41,7 @@
         <TextBlock HorizontalAlignment="Left" Margin="884,171,0,0" TextWrapping="Wrap" Text="5" VerticalAlignment="Top" RenderTransformOrigin="-0.167,0.436"/>
         <TextBlock HorizontalAlignment="Left" Margin="685,122,0,0" TextWrapping="Wrap" Text="Количество ошибок для оценивания" VerticalAlignment="Top" Width="208"/>
         <TextBlock HorizontalAlignment="Left" Margin="10,514,0,0" TextWrapping="Wrap" Text="Время на оин вопрос" VerticalAlignment="Top"/>
-        <TextBox x:Name="tb_time" TextAlignment="Center"  HorizontalAlignment="Left" Margin="133,514,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="49"/>
+        <TextBox x:Name="tb_time" TextAlignment="Center"  HorizontalAlignment="Left" Margin="133,514,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="40"/>
+        <Label Content=".мин" HorizontalAlignment="Left" Margin="169,509,0,0" VerticalAlignment="Top"/>
     </Grid>
 </Window>
