@@ -33,10 +33,10 @@ namespace QuadroTestPlatform
             nameTems = nameT;
         }
 
-        public CRQuestion(string nameQustion, string nameT)
+        public CRQuestion(string nameQustion, string nameT, int key_tems)
         {
             nameTems = nameT;
-
+            keyTem = key_tems;
             isReplace = true;
             InitializeComponent();
             myArray = new answerCH[6];
@@ -65,7 +65,7 @@ namespace QuadroTestPlatform
 
                 while (read.Read())
                 {
-                    if (read.GetValue(3).ToString() == nameQustion)
+                    if (read.GetValue(3).ToString() == nameQustion && read.GetValue(1).ToString() == Convert.ToString(keyTem))
                     {
                         tb_nameQuestion.Text = read.GetString(3);
                         keyQuestion = read.GetValue(0).ToString();
@@ -134,7 +134,7 @@ namespace QuadroTestPlatform
                                 command.CommandText = "DELETE t_answer WHERE qKey='" + keyQuestion + "'";
                                 SqlDataReader read = command.ExecuteReader();
                                 read.Close();
-                                command.CommandText = "UPDATE t_question SET Question = '"+tb_nameQuestion.Text.Trim()+ "' WHERE Id = " + keyQuestion;
+                                command.CommandText = "UPDATE t_question SET Question = '" + tb_nameQuestion.Text.Trim() + "' WHERE Id = " + keyQuestion;
                                 command.ExecuteNonQuery();
                                 SetAnswer(tb_answer1.Text.Trim(), tb_answer2.Text.Trim(), tb_answer3.Text.Trim(), tb_answer4.Text.Trim(), tb_answer5.Text.Trim(), tb_answer6.Text.Trim(), keyQuestion);
                                 for (int i = 0; i < 6; i++)
@@ -362,7 +362,7 @@ namespace QuadroTestPlatform
             if (cb_true5.IsChecked == true)
             {
                 cb_true5.IsChecked = false;
-                return tb_answer6.Text.Trim();
+                return tb_answer5.Text.Trim();
             }
             if (cb_true6.IsChecked == true)
             {
