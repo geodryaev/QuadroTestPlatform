@@ -65,7 +65,9 @@
                     <Button x:Name="b_createTableDB" Content="Создать таблицы" HorizontalAlignment="Left" Margin="611,0,0,0" VerticalAlignment="Center" Height="22" Width="145" Click="b_createTableDB_Click"/>
                 </Grid>
             </TabItem>
-
+            <TabItem Header="Просмотр и выгрузка результатов">
+                
+            </TabItem>
 
         </TabControl>
 
