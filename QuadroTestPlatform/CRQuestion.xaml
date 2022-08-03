@@ -4,8 +4,9 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:QuadroTestPlatform"
+        WindowStartupLocation="CenterScreen"
         mc:Ignorable="d"
-  Title="QTP" Height="731" Width="1052">
+        Title="QTP" Height="731" Width="1052">
     <Grid Background="#FF585858" Margin="0,0,0,-6">
         <Button x:Name="b_SetQuestion" Content="Готово" HorizontalAlignment="Left" Margin="18,231,0,0" VerticalAlignment="Top" Width="138" Click="Button_Click"/>
         <TextBox x:Name="tb_answer1" HorizontalAlignment="Left" Margin="252,205,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="726" Height="72"/>
