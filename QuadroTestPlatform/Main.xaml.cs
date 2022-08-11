@@ -1,5 +1,7 @@
 ﻿using System.Data.SqlClient;
+using System.Reflection.Emit;
 using System.Windows;
+using System.Windows.Media.Animation;
 
 namespace QuadroTestPlatform
 {
@@ -40,7 +42,6 @@ namespace QuadroTestPlatform
                     }
                     read.Close();
                     conn.Close();
-
                 }
             }
             catch
@@ -90,8 +91,6 @@ namespace QuadroTestPlatform
                 MessageBox.Show("Настройки сохранены");
             }
         }
-
-
 
         private void b_createTableDB_Click(object sender, RoutedEventArgs e)
         {
@@ -297,6 +296,7 @@ namespace QuadroTestPlatform
         {
             return "Server=" + Properties.Settings.Default.pathSQL + ";Initial Catalog =QTPDB; User ID = sa; Password = qwerty12";
         }
+
         public void reafreshUnit()
         {
             cb_groupe.Items.Clear();
@@ -407,6 +407,70 @@ namespace QuadroTestPlatform
                     reafreshUnit();
                 }
             }
+        }
+
+        class DisPer
+        {
+            public DisPer(string nameDis, string time, string answerUser)
+            {
+                _nameDis = nameDis;
+                _time = time;
+                for (int i = 0; i < answerUser.Length; i++)
+                {
+
+                }
+
+            }
+
+            public string _nameDis, _time;
+            public Question[] _arr; 
+        }
+
+        class Question
+        {
+            public Question(string str)
+            {
+                int i = 0;
+                string buffer = "";
+                for (; i < str.Length; i++)
+                {
+                    if (str[i]!= '-')
+                    {
+                        buffer += str[i];
+                    }
+                    if (str[i] == '-') 
+                        break;
+
+                }
+                i++;
+                _answer = null;
+                _IDQuestion = buffer;
+                buffer = "";
+                int count = 0;
+                for (int j = 0; j < str.Length; j++)
+                {
+                    if (str[i] == '|')
+                        count++;
+                }
+                _answer = new string[count];
+                count = 0;
+                for (; i < str.Length; i++)
+                {
+                    if (str[i] != '|')
+                    {
+                        buffer += str[i];
+                    }
+                    if (str[i] == '|')
+                    {
+                        _answer[count] = buffer;
+                        buffer = "";
+                        count++;
+                    }
+                }
+            }
+
+            public string _IDQuestion;
+            public string[] _answer;
         }
     }
 }

@@ -37,16 +37,20 @@
                     </LinearGradientBrush>
                 </TabItem.Background>
                 <Grid Background="#FF585858">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="503*"/>
+                        <ColumnDefinition Width="291*"/>
+                    </Grid.ColumnDefinitions>
                     <TextBlock HorizontalAlignment="Left" Margin="27,10,0,0" TextWrapping="Wrap" Text="Подразделения" VerticalAlignment="Top"/>
-                    <TextBlock HorizontalAlignment="Left" Margin="678,10,0,0" TextWrapping="Wrap" Text="Учебные группы" VerticalAlignment="Top"/>
+                    <TextBlock HorizontalAlignment="Left" Margin="175,10,0,0" TextWrapping="Wrap" Text="Учебные группы" VerticalAlignment="Top" Grid.Column="1"/>
                     <ComboBox x:Name="cb_Unit" HorizontalAlignment="Left" Margin="10,31,0,0" VerticalAlignment="Top" Width="120"/>
                     <Button x:Name="b_createUnit" Content="Добавить" HorizontalAlignment="Left" Margin="157,64,0,0" VerticalAlignment="Top" Width="120" Click="b_createUnit_Click"/>
                     <Button x:Name="b_deleteUnit" Content="Удалить" HorizontalAlignment="Left" Margin="10,64,0,0" VerticalAlignment="Top" Width="120" Click="b_deleteUnit_Click"/>
                     <TextBox x:Name="tb_nameUnit" HorizontalAlignment="Left" Margin="157,31,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="22"/>
-                    <ComboBox x:Name="cb_groupe" HorizontalAlignment="Left" Margin="664,31,0,0" VerticalAlignment="Top" Width="120"/>
-                    <TextBox x:Name="tb_groupe" HorizontalAlignment="Left" Margin="525,31,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="22"/>
-                    <Button x:Name="b_deleteGroupe" Content="Удалить" HorizontalAlignment="Left" Margin="664,64,0,0" VerticalAlignment="Top" Width="120" Click="b_deleteGroupe_Click"/>
-                    <Button x:Name="b_createGroupe" Content="Добавить" HorizontalAlignment="Left" Margin="525,64,0,0" VerticalAlignment="Top" Width="120" Click="b_createGroupe_Click"/>
+                    <ComboBox x:Name="cb_groupe" HorizontalAlignment="Left" Margin="161,31,0,0" VerticalAlignment="Top" Width="120" Grid.Column="1"/>
+                    <TextBox x:Name="tb_groupe" HorizontalAlignment="Left" Margin="22,31,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="22" Grid.Column="1"/>
+                    <Button x:Name="b_deleteGroupe" Content="Удалить" HorizontalAlignment="Left" Margin="161,64,0,0" VerticalAlignment="Top" Width="120" Click="b_deleteGroupe_Click" Grid.Column="1"/>
+                    <Button x:Name="b_createGroupe" Content="Добавить" HorizontalAlignment="Left" Margin="22,64,0,0" VerticalAlignment="Top" Width="120" Click="b_createGroupe_Click" Grid.Column="1"/>
 
                 </Grid>
             </TabItem>
@@ -67,7 +71,12 @@
                 </Grid>
             </TabItem>
             <TabItem Header="Просмотр и выгрузка результатов">
-                
+                <TabItem.Background>
+                    <LinearGradientBrush EndPoint="0,1">
+                        <GradientStop Color="#FFF0F0F0"/>
+                        <GradientStop Color="#FF585858" Offset="1"/>
+                    </LinearGradientBrush>
+                </TabItem.Background>
             </TabItem>
 
         </TabControl>
