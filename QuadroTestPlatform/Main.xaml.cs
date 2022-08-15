@@ -1,5 +1,6 @@
 ﻿using System.Data.SqlClient;
 using System.Reflection.Emit;
+using System.Security.Policy;
 using System.Windows;
 using System.Windows.Media.Animation;
 
@@ -42,6 +43,7 @@ namespace QuadroTestPlatform
                     }
                     read.Close();
                     conn.Close();
+
                 }
             }
             catch
@@ -409,24 +411,127 @@ namespace QuadroTestPlatform
             }
         }
 
-        class DisPer
+        public string searhForID(string id, string table, int numberColumn)
+        {
+            string answer = null;
+            using (SqlConnection con = new SqlConnection(strSQLConnection()))
+            {
+                con.Open();
+                SqlCommand command = new SqlCommand("SELECT * FROM "+table);
+                command.Connection = con;
+                SqlDataReader read = command.ExecuteReader();
+                while (read.Read())
+                {
+                    if (read.GetString(0) == id)
+                    {
+                        answer = read.GetString(numberColumn);
+                    }
+                }
+
+            }
+            return answer;
+        }
+
+        class AllPerson
+        {
+            public AllPerson(string sqlConnection)
+            {
+                using (SqlConnection con = new SqlConnection(sqlConnection))
+                {
+                    int count = 0;
+                    con.Open();
+                    SqlCommand command = new SqlCommand("SELECT * FROM t_result");
+                    command.Connection = con;
+                    SqlDataReader read = command.ExecuteReader();
+                    while(read.Read())
+                    {
+                        _arrAll[count]._unit= read.GetValue(1).ToString();
+                        _arrAll[count].numberUnit= read.GetValue(2).ToString();
+                        _arrAll[count]._zvezda= read.GetValue(3).ToString();
+                        _arrAll[count]._name= read.GetValue(4).ToString();
+                        _arrAll[count]._date= read.GetValue(5).ToString();
+                        _arrAll[count]._dis= read.GetValue(6).ToString();
+                        _arrAll[count]._answerUser= read.GetValue(7).ToString();
+                    }
+                    read.Close();
+                    con.Close();
+                }
+
+            }
+
+            private void set()
+            {
+                for (int i = 0; i < _arrAll.Length; i++)
+                {
+
+                }
+            }
+
+
+            private structRead[] _arrStruct; 
+            private myStruct[] _arrAll;
+            private string[] _date, _time, _name;
+            public Personality[] _arr;
+        }
+
+
+        class Personality
+        {
+            public Personality (string unit, string numberUnit, string zvezda, string name, string[]date, string[] dis, string[] answerUser)
+            {
+                _unit = unit;
+                _zvezda = zvezda;
+                _numberUnit = numberUnit;
+                _name = name;
+                _arr = new DisPer[date.Length];
+                for (int i = 0; i < date.Length; i++) 
+                {
+                    _arr[i] = new DisPer(dis[i], date[i], answerUser[i]);
+                }
+            }
+
+            public string _unit;
+            public string _numberUnit;
+            public string _zvezda;
+            public string _name;
+            public DisPer[] _arr; 
+        }
+
+        public class DisPer
         {
             public DisPer(string nameDis, string time, string answerUser)
             {
                 _nameDis = nameDis;
                 _time = time;
+                int count = 0;
                 for (int i = 0; i < answerUser.Length; i++)
                 {
-
+                    if (answerUser[i] == '&')
+                        count++;
                 }
-
+                string buffer = "";
+                _arr = new Question[count];
+                count = 0;
+                for (int i = 0; i < answerUser.Length; i++)
+                {
+                    if (answerUser[i] != '&')
+                    {
+                        buffer += answerUser[i];
+                    }
+                    else
+                    {
+                        _arr[count] = new Question(buffer);
+                        count++;
+                        buffer = "";
+                    }
+                }
             }
 
             public string _nameDis, _time;
             public Question[] _arr; 
         }
 
-        class Question
+        public class Question
         {
             public Question(string str)
             {
@@ -471,6 +576,51 @@ namespace QuadroTestPlatform
 
             public string _IDQuestion;
             public string[] _answer;
+        }
+
+        public struct myStruct
+        {
+            public string _unit, _name, numberUnit, _zvezda, _date, _dis, _answerUser;
+        }
+        public class structRead
+        {
+            public structRead(string unit, string numberUnit, string zvezda)
+            { 
+                _unit = unit;
+                _numberUnit = numberUnit;
+                _zvezda = zvezda;
+                _count = 0;
+                _date = new string[_count];
+                _dis = new string[_count];
+                _answerUser = new string[_count];
+            }
+
+            public void Push (string date, string dis, string answerUser)
+            {
+                _count++;
+                string[] buffer1, buffer2, buffer3;
+                buffer1 = new string[_count];
+                buffer2 = new string[_count];
+                buffer3 = new string[_count];
+
+                for (int i = 0; i < _dis.Length; i++)
+                {
+                    buffer1[i] = _date[i];
+                    buffer2[i] = _dis[i];
+                    buffer3[i] = _answerUser[i];
+                }
+                buffer1[_count-1] = date;
+                buffer2[_count-1] = dis;
+                buffer3[_count-1] = answerUser;
+                _date = buffer1;
+                _dis = buffer2;
+                _answerUser = buffer3;
+            }
+
+            private int _count;
+
+            public string _unit, _numberUnit, _zvezda;
+            public string[] _date, _dis, _answerUser;
         }
     }
 }
