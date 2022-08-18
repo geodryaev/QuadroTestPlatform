@@ -1,8 +1,10 @@
-﻿using System.Data.SqlClient;
+﻿using System;
+using System.Data.SqlClient;
 using System.Reflection.Emit;
 using System.Security.Policy;
 using System.Windows;
 using System.Windows.Media.Animation;
+using System.Xml.Serialization;
 
 namespace QuadroTestPlatform
 {
@@ -45,6 +47,7 @@ namespace QuadroTestPlatform
                     conn.Close();
 
                 }
+                AllPerson person = new AllPerson(strSQLConnection());
             }
             catch
             {
@@ -438,39 +441,102 @@ namespace QuadroTestPlatform
             {
                 using (SqlConnection con = new SqlConnection(sqlConnection))
                 {
-                    int count = 0;
                     con.Open();
+                    _numberInArray = 0;
                     SqlCommand command = new SqlCommand("SELECT * FROM t_result");
                     command.Connection = con;
                     SqlDataReader read = command.ExecuteReader();
+                    _arrAll = new myStruct[0];
                     while(read.Read())
                     {
-                        _arrAll[count]._unit= read.GetValue(1).ToString();
-                        _arrAll[count].numberUnit= read.GetValue(2).ToString();
-                        _arrAll[count]._zvezda= read.GetValue(3).ToString();
-                        _arrAll[count]._name= read.GetValue(4).ToString();
-                        _arrAll[count]._date= read.GetValue(5).ToString();
-                        _arrAll[count]._dis= read.GetValue(6).ToString();
-                        _arrAll[count]._answerUser= read.GetValue(7).ToString();
+                        PushToAll(read.GetValue(1).ToString(), read.GetValue(2).ToString(), read.GetValue(3).ToString(), read.GetValue(4).ToString(), read.GetValue(5).ToString(), read.GetValue(6).ToString(), read.GetValue(7).ToString());
                     }
                     read.Close();
                     con.Close();
                 }
-
+                set();
             }
 
             private void set()
             {
                 for (int i = 0; i < _arrAll.Length; i++)
                 {
+                    Push(_arrAll[i]._unit, _arrAll[i].numberUnit, _arrAll[i]._zvezda, _arrAll[i]._name, _arrAll[i]._date, _arrAll[i]._dis, _arrAll[i]._answerUser, Exsist(_arrAll[i]._unit, _arrAll[i].numberUnit, _arrAll[i]._zvezda, _arrAll[i]._name));
+                }
 
+                _arr = new Personality[_arrStruct.Length];
+
+                for (int i = 0; i < _arrStruct.Length; i++)
+                {
+                    _arr[i] = new Personality(_arrStruct[i]._unit, _arrStruct[i]._numberUnit, _arrStruct[i]._zvezda, _arrStruct[i]._name, _arrStruct[i]._date, _arrStruct[i]._dis, _arrStruct[i]._answerUser);
                 }
             }
+            
+            private void PushToAll (string unit, string numberUnit, string zvezda, string name, string time, string dis, string answerUser)
+            {
+                myStruct[] buufer = new myStruct[_arrAll.Length + 1];
+                for (int i =0; i < _arrAll.Length;i++)
+                {
+                    buufer[i] = _arrAll[i];
+                }
 
+                buufer[_arrAll.Length]._unit = unit;
+                buufer[_arrAll.Length].numberUnit = numberUnit;
+                buufer[_arrAll.Length]._zvezda  = zvezda;
+                buufer[_arrAll.Length]._name = name;
+                buufer[_arrAll.Length]._date = time;
+                buufer[_arrAll.Length]._dis = dis;
+                buufer[_arrAll.Length]._answerUser = answerUser;
+                _arrAll = buufer;
+            }
 
+            private void Push(string unit, string numberUnit, string zvezda, string name, string time, string dis, string answerUser, bool noFirst)
+            {
+                if (noFirst)
+                {
+                    _arrStruct[_numberInArray].Push(time, dis, answerUser);
+                }
+                else
+                {
+                    structRead[] buffer = new structRead[_arrStruct.Length + 1];
+                    for (int i = 0; i < _arrStruct.Length; i++)
+                    {
+                        buffer[i] = _arrStruct[i];
+                    }
+                    buffer[_arrStruct.Length] = new structRead(unit, numberUnit, zvezda, name);
+                    buffer[_arrStruct.Length].Push(time, dis, answerUser);
+                    _arrStruct = buffer;
+                }
+            }
+            private bool Exsist(string unit, string numberUnit, string zvezda, string name)
+            {
+                if (_arrStruct == null)
+                {
+                    _arrStruct = new  structRead[0];
+                }
+                for (int i = 0; i < _arrStruct.Length; i++)
+                {
+                    if (_arrStruct[i]._unit == unit)
+                    {
+                        if (_arrStruct[i]._numberUnit == numberUnit)
+                        {
+                            if (_arrStruct[i]._zvezda == zvezda)
+                            {
+                                if (_arrStruct[i]._name == name)
+                                {
+                                    _numberInArray = i;
+                                    return true;
+                                }
+                            }
+                        }
+                    }
+                }
+                return false;
+            }
+
+            private int _numberInArray;
             private structRead[] _arrStruct; 
             private myStruct[] _arrAll;
-            private string[] _date, _time, _name;
             public Personality[] _arr;
         }
 
@@ -554,7 +620,7 @@ namespace QuadroTestPlatform
                 int count = 0;
                 for (int j = 0; j < str.Length; j++)
                 {
-                    if (str[i] == '|')
+                    if (str[j] == '|')
                         count++;
                 }
                 _answer = new string[count];
@@ -584,11 +650,12 @@ namespace QuadroTestPlatform
         }
         public class structRead
         {
-            public structRead(string unit, string numberUnit, string zvezda)
+            public structRead(string unit, string numberUnit, string zvezda, string name)
             { 
                 _unit = unit;
                 _numberUnit = numberUnit;
                 _zvezda = zvezda;
+                _name = name;
                 _count = 0;
                 _date = new string[_count];
                 _dis = new string[_count];
@@ -619,7 +686,7 @@ namespace QuadroTestPlatform
 
             private int _count;
 
-            public string _unit, _numberUnit, _zvezda;
+            public string _unit, _numberUnit, _zvezda, _name;
             public string[] _date, _dis, _answerUser;
         }
     }
