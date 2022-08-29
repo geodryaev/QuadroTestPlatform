@@ -26,7 +26,7 @@ namespace QuadroTestPlatform
                 while (read.Read())
                 {
                     if (read.GetValue(1).ToString() == nameTems)
-                    {
+                    {  
                         tb_countQMax.Text = read.GetValue(5).ToString();
                         keyTems = Convert.ToInt32(read.GetValue(0));
                         tb_tree.Text = read.GetValue(2).ToString();
@@ -34,7 +34,6 @@ namespace QuadroTestPlatform
                         tb_five.Text = read.GetValue(4).ToString();
                         tb_time.Text = read.GetValue(6).ToString();
                     }
-
                 }
                 read.Close();
                 command.CommandText = "SELECT * FROM t_question";
@@ -45,14 +44,13 @@ namespace QuadroTestPlatform
                 };
                 while (read.Read())
                 {
-                    if (read.GetValue(1).ToString() == keyTems.ToString().Trim())
+                    if (read.GetValue(1).ToString() == keyTems.ToString().Trim() && read.GetValue(4).ToString() != "0")
                     {
                         cQuestion a = new cQuestion();
                         a.Question = read.GetValue(3).ToString().Trim();
                         q.Add(a);
                         numCol++;
                     }
-
                 }
                 dg_question.ItemsSource = q;
                 dg_question.ColumnWidth = 900;
@@ -117,10 +115,7 @@ namespace QuadroTestPlatform
                     }
                 }
                 read.Close();
-                command.CommandText = "DELETE t_question WHERE id = " + keyDelete;
-                read = command.ExecuteReader();
-                read.Close();
-                command.CommandText = "DELETE t_answer WHERE qKey = " + keyDelete;
+                command.CommandText = "UPDATE t_question SET tr = '0' WHERE id = " + keyDelete;
                 read = command.ExecuteReader();
                 read.Close();
                 connect.Close();

@@ -90,7 +90,6 @@ namespace QuadroTestPlatform
                         t[countTB].Text = read.GetValue(2).ToString();
                         countTB++;
                     }
-
                 }
                 SetCheak(answerTrue);
             }
@@ -109,7 +108,7 @@ namespace QuadroTestPlatform
                     SqlDataReader read = command.ExecuteReader();
                     while (read.Read())
                     {
-                        if (read.GetValue(3).ToString() == tb_nameQuestion.Text && read.GetValue(1).ToString() == keyTem.ToString())
+                        if (read.GetValue(3).ToString() == tb_nameQuestion.Text && read.GetValue(1).ToString() == keyTem.ToString() && read.GetValue(4).ToString() != "0")
                         {
                             errorNameQ = true;
                         }
@@ -164,11 +163,9 @@ namespace QuadroTestPlatform
                         {
                             if (!errorNameQ)
                             {
-
                                 using (SqlConnection connect = new SqlConnection(strSQLConnection()))
                                 {
                                     string buf1, aKey = "";
-
                                     connect.Open();
                                     SqlCommand command = new SqlCommand();
                                     command.Connection = connect;
@@ -211,7 +208,6 @@ namespace QuadroTestPlatform
                             {
                                 MessageBox.Show("Такой вопрос уже существет");
                             }
-
                         }
                     }
                     else
@@ -228,8 +224,8 @@ namespace QuadroTestPlatform
             {
                 MessageBox.Show("Незаполнен ни один ответ на вопрос");
             }
-
         }
+
         public string strSQLConnection()
         {
             return "Server=" + Properties.Settings.Default.pathSQL + ";Initial Catalog =QTPDB; User ID = sa; Password = qwerty12";
@@ -300,32 +296,32 @@ namespace QuadroTestPlatform
                 com.Connection = con;
                 if (str1 != null && str1.Length != 0)
                 {
-                    com.CommandText = "INSERT INTO t_answer (qKey, answer) VALUES ('" + qKey + "', '" + str1 + "')";
+                    com.CommandText = "INSERT INTO t_answer (qKey, answer, tr) VALUES ('" + qKey + "', '" + str1 + "', '1')";
                     com.ExecuteNonQuery();
                 }
                 if (str2 != null && str2.Length != 0)
                 {
-                    com.CommandText = "INSERT INTO t_answer (qKey, answer) VALUES ('" + qKey + "', '" + str2 + "')";
+                    com.CommandText = "INSERT INTO t_answer (qKey, answer, tr) VALUES ('" + qKey + "', '" + str2 + "', '1')";
                     com.ExecuteNonQuery();
                 }
                 if (str3 != null && str3.Length != 0)
                 {
-                    com.CommandText = "INSERT INTO t_answer (qKey, answer) VALUES ('" + qKey + "', '" + str3 + "')";
+                    com.CommandText = "INSERT INTO t_answer (qKey, answer, tr) VALUES ('" + qKey + "', '" + str3 + "', '1')";
                     com.ExecuteNonQuery();
                 }
                 if (str4 != null && str4.Length != 0)
                 {
-                    com.CommandText = "INSERT INTO t_answer (qKey, answer) VALUES ('" + qKey + "', '" + str4 + "')";
+                    com.CommandText = "INSERT INTO t_answer (qKey, answer, tr) VALUES ('" + qKey + "', '" + str4 + "', '1')";
                     com.ExecuteNonQuery();
                 }
                 if (str5 != null && str5.Length != 0)
                 {
-                    com.CommandText = "INSERT INTO t_answer (qKey, answer) VALUES ('" + qKey + "', '" + str5 + "')";
+                    com.CommandText = "INSERT INTO t_answer (qKey, answer, tr) VALUES ('" + qKey + "', '" + str5 + "', '1')";
                     com.ExecuteNonQuery();
                 }
                 if (str6 != null && str6.Length != 0)
                 {
-                    com.CommandText = "INSERT INTO t_answer (qKey, answer) VALUES ('" + qKey + "', '" + str6 + "')";
+                    com.CommandText = "INSERT INTO t_answer (qKey, answer, tr) VALUES ('" + qKey + "', '" + str6 + "', '1')";
                     com.ExecuteNonQuery();
                 }
                 con.Close();
@@ -369,8 +365,6 @@ namespace QuadroTestPlatform
                 cb_true6.IsChecked = false;
                 return tb_answer6.Text.Trim();
             }
-
-
             return outp;
         }
         public string[] GetArrayTrueAnswer(string str)
@@ -416,6 +410,5 @@ namespace QuadroTestPlatform
             public CheckBox checkBox;
             public TextBox textBox;
         }
-
     }
 }

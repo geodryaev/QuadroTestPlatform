@@ -11,15 +11,21 @@ namespace QuadroTestPlatform
 
     public partial class Main : Window
     {
+        string[] d;
+        int state;
+        Personality persons;
+        AllPerson allPerson;
+        myAll all;
         public Main()
         {
             InitializeComponent();
-            tb_pathSQL.Text = Properties.Settings.Default.pathSQL;
+            state = 0;
+            
             try
             {
                 using (SqlConnection conn = new SqlConnection(strSQLConnection()))
                 {
-                    clearTree(ref TemsTree);
+                    clearTree(ref lBox);
                     conn.Open();
                     SqlCommand command = new SqlCommand();
                     command.CommandText = "SELECT * FROM t_tems";
@@ -27,7 +33,16 @@ namespace QuadroTestPlatform
                     SqlDataReader read = command.ExecuteReader();
                     while (read.Read())
                     {
-                        TemsTree.Items.Add(read.GetValue(1));
+                        string buf = "";
+                        if(read.GetValue(7).ToString() == "1")
+                        {
+                            buf = "Вкл.";
+                        }
+                        else
+                        {
+                            buf = "Выкл.";
+                        }
+                        lBox.Items.Add(read.GetValue(1).ToString() + getVoidSpaceOne(read.GetValue(1).ToString(), 30) + buf);
                     }
                     read.Close();
                     command.CommandText = "SELECT * FROM t_groupe";
@@ -45,9 +60,66 @@ namespace QuadroTestPlatform
                     }
                     read.Close();
                     conn.Close();
-
                 }
-                AllPerson person = new AllPerson(strSQLConnection());
+
+                allPerson = new AllPerson(strSQLConnection());
+                if(allPerson._arr != null)
+                {
+                    for (int i = allPerson._arr.Length - 1; i > -1; i--)
+                    {
+                        string answer =
+                            Convert.ToString(allPerson._arr.Length - i) +
+                            getVoidSpaceOne(Convert.ToString(allPerson._arr.Length - i), 5) + ///---
+                            allPerson._arr[i]._unit +
+                            getVoidSpaceOne(Convert.ToString(allPerson._arr.Length - i) + getVoidSpaceOne(Convert.ToString(allPerson._arr.Length - i), 5) + allPerson._arr[i]._unit, 20) + ///---
+                            allPerson._arr[i]._zvezda +
+                            getVoidSpaceOne(Convert.ToString(allPerson._arr.Length - i) +
+                            getVoidSpaceOne(Convert.ToString(allPerson._arr.Length - i), 5) + ///---
+                            allPerson._arr[i]._unit +
+                            getVoidSpaceOne(Convert.ToString(allPerson._arr.Length - i) + getVoidSpaceOne(Convert.ToString(allPerson._arr.Length - i), 5) + allPerson._arr[i]._unit, 20) + ///---
+                            allPerson._arr[i]._zvezda, 50) + ///---
+                            allPerson._arr[i]._name +
+                            getVoidSpaceOne(Convert.ToString(allPerson._arr.Length - i) +
+                            getVoidSpaceOne(Convert.ToString(allPerson._arr.Length - i), 5) + ///---
+                            allPerson._arr[i]._unit +
+                            getVoidSpaceOne(Convert.ToString(allPerson._arr.Length - i) + getVoidSpaceOne(Convert.ToString(allPerson._arr.Length - i), 5) + allPerson._arr[i]._unit, 20) + ///---
+                            allPerson._arr[i]._zvezda +
+                            getVoidSpaceOne(Convert.ToString(allPerson._arr.Length - i) +
+                            getVoidSpaceOne(Convert.ToString(allPerson._arr.Length - i), 5) + ///---
+                            allPerson._arr[i]._unit +
+                            getVoidSpaceOne(Convert.ToString(allPerson._arr.Length - i) + getVoidSpaceOne(Convert.ToString(allPerson._arr.Length - i), 5) + allPerson._arr[i]._unit, 20) + ///---
+                            allPerson._arr[i]._zvezda, 50) + ///---
+                            allPerson._arr[i]._name, 75) + ///---
+                            allPerson._arr[i]._numberUnit;
+                        lBox.Items.Add(answer);
+                    }
+                    string[] buf;
+                    int count = 0;
+                    using (SqlConnection con = new SqlConnection(strSQLConnection()))
+                    {
+                        con.Open();
+                        SqlCommand comnad = new SqlCommand("SELECT * FROM t_tems");
+                        comnad.Connection = con;
+                        SqlDataReader read = comnad.ExecuteReader();
+                        while (read.Read())
+                        {
+                            count++;
+                        }
+                        buf = new string[count];
+                        count = 0;
+                        read.Close();
+                        read = comnad.ExecuteReader();
+                        while (read.Read())
+                        {
+                            buf[count] = read.GetString(1);
+                            count++;
+                        }
+                        read.Close();
+                        con.Close();
+                    }
+                    all = new myAll(buf, strSQLConnection());
+                }
+                refeshLB();
             }
             catch
             {
@@ -57,238 +129,73 @@ namespace QuadroTestPlatform
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            if (TextBoxNameTems.Text.ToString() != null && TextBoxNameTems.Text.ToString() != "")
-            {
-                using (SqlConnection conn = new SqlConnection(strSQLConnection()))
-                {
-                    conn.Open();
-                    SqlCommand comm = new SqlCommand();
-                    comm.CommandText = "INSERT INTO t_tems (Name, tree, four, five, CountQMax, time) VALUES (\'" + TextBoxNameTems.Text.ToString().Trim() + "\', 3, 2, 1, 20, 3)";
-                    comm.Connection = conn;
-                    comm.ExecuteNonQuery();
-                    conn.Close();
-                    refresh();
-                }
-            }
-            TextBoxNameTems.Text = ""; 
+            CreateNewTems form = new CreateNewTems();
+            form.ShowDialog();
+            //if (TextBoxNameTems.Text.ToString() != null && TextBoxNameTems.Text.ToString() != "")
+            //{
+            //    using (SqlConnection conn = new SqlConnection(strSQLConnection()))
+            //    {
+            //        conn.Open();
+            //        SqlCommand comm = new SqlCommand();
+            //        comm.CommandText = "INSERT INTO t_tems (Name, tree, four, five, CountQMax, time) VALUES (\'" + TextBoxNameTems.Text.ToString().Trim() + "\', 3, 2, 1, 20, 3)";
+            //        comm.Connection = conn;
+            //        comm.ExecuteNonQuery();
+            //        conn.Close();
+            //        refresh();
+            //    }
+            //}
+            //TextBoxNameTems.Text = ""; 
         }
 
         private void b_deleteTems_Click(object sender, RoutedEventArgs e)
         {
-            TemsTree.Items.Remove(TemsTree.SelectedItem);
-            using (SqlConnection conn= new SqlConnection (strSQLConnection()))
+            if (lb_.SelectedIndex != -1)
             {
-                conn.Open();
-                SqlCommand com = new SqlCommand();
-                com.CommandText = "DELETE t_tems WHERE Name = '" + TemsTree.SelectedItem.ToString()+"'";
-                com.Connection = conn;
-                com.ExecuteNonQuery();
-                conn.Close();
-            }
-        }
-
-        private void b_replacePathSQL_Click(object sender, RoutedEventArgs e)
-        {
-            if (tb_pathSQL.Text.ToString() != null && tb_pathSQL.Text.ToString() != "")
-            {
-                Properties.Settings.Default.pathSQL = tb_pathSQL.Text.ToString();
-                Properties.Settings.Default.Save();
-                MessageBox.Show("Настройки сохранены");
-            }
-        }
-
-        private void b_createTableDB_Click(object sender, RoutedEventArgs e)
-        {
-            using (SqlConnection connect = new SqlConnection(strSQLConnection()))
-            {
-                try
+                string d = getNameTemsFromStr(lb_.Items[lb_.SelectedIndex].ToString());
+                MessageBoxResult b = MessageBox.Show(
+                    "Вы действительно хотите перевести состояние темы - " + d,
+                    "Подтвердите действие",
+                    MessageBoxButton.OKCancel,
+                    MessageBoxImage.Question,MessageBoxResult.Cancel,
+                    MessageBoxOptions.DefaultDesktopOnly
+                );
+                if (b == MessageBoxResult.OK)
                 {
-                    connect.Open();
-                    SqlCommand com = new SqlCommand();
-                    com.CommandText = "SELECT * FROM t_tems";
-                    com.Connection = connect;
-                    com.ExecuteNonQuery();
-                    connect.Close();
-
-                }
-                catch
-                {
-                    SqlCommand com = new SqlCommand();
-                    com.CommandText = "CREATE TABLE t_tems (Id INT PRIMARY KEY IDENTITY, Name NVARCHAR(1000), tree  NVARCHAR (1000), four  NVARCHAR (1000), five  NVARCHAR (1000), CountQMax NVARCHAR (1000), time NVARCHAR (1000))";
-                    com.Connection = connect;
-                    com.ExecuteNonQuery();
-                    connect.Close();
-                }
-
-                try
-                {
-                    connect.Open();
-                    SqlCommand com = new SqlCommand();
-                    com.CommandText = "SELECT * FROM t_question";
-                    com.Connection = connect;
-                    com.ExecuteNonQuery();
-                    connect.Close();
-
-                }
-                catch
-                {
-                    SqlCommand com = new SqlCommand();
-                    com.CommandText = "CREATE TABLE t_question (Id INT PRIMARY KEY IDENTITY, tKey INT NOT NULL, aKey NVARCHAR (1000), Question NVARCHAR (1000))";
-                    com.Connection = connect;
-                    com.ExecuteNonQuery();
-                    connect.Close();
-                }
-                try
-                {
-                    connect.Open();
-                    SqlCommand com = new SqlCommand();
-                    com.CommandText = "SELECT * FROM t_answer";
-                    com.Connection = connect;
-                    com.ExecuteNonQuery();
-                    connect.Close();
-
-                }
-                catch
-                {
-                    SqlCommand com = new SqlCommand();
-                    com.CommandText = "CREATE TABLE t_answer (Id INT PRIMARY KEY IDENTITY, qKey INT, answer NVARCHAR (1000))";
-                    com.Connection = connect;
-                    com.ExecuteNonQuery();
-                    connect.Close();
-                }
-                try
-                {
-                    connect.Open();
-                    SqlCommand com = new SqlCommand();
-                    com.CommandText = "SELECT * FROM t_zvezda";
-                    com.Connection = connect;
-                    com.ExecuteNonQuery();
-                    connect.Close();
-
-                }
-                catch
-                {
-                    SqlCommand com = new SqlCommand();
-                    com.CommandText = "CREATE TABLE t_zvezda (Id INT PRIMARY KEY IDENTITY, zvanie NVARCHAR (1000))";
-                    com.Connection = connect;
-                    com.ExecuteNonQuery();
-                    com.CommandText = "INSERT t_zvezda VALUES ('Мичман')";
-                    com.ExecuteNonQuery();
-                    com.CommandText = "INSERT t_zvezda VALUES ('Прапорщик')";
-                    com.ExecuteNonQuery();
-                    com.CommandText = "INSERT t_zvezda VALUES ('Старший прапорщик')";
-                    com.ExecuteNonQuery();
-                    com.CommandText = "INSERT t_zvezda VALUES ('Младший лейтенант')";
-                    com.ExecuteNonQuery();
-                    com.CommandText = "INSERT t_zvezda VALUES ('Лейтенант')";
-                    com.ExecuteNonQuery();
-                    com.CommandText = "INSERT t_zvezda VALUES ('Старший лейтенант')";
-                    com.ExecuteNonQuery();
-                    com.CommandText = "INSERT t_zvezda VALUES ('Капитан')";
-                    com.ExecuteNonQuery();
-                    com.CommandText = "INSERT t_zvezda VALUES ('Майор')";
-                    com.ExecuteNonQuery();
-                    com.CommandText = "INSERT t_zvezda VALUES ('Подполковник')";
-                    com.ExecuteNonQuery();
-                    com.CommandText = "INSERT t_zvezda VALUES ('Полковник')";
-                    com.ExecuteNonQuery();
-                    com.CommandText = "INSERT t_zvezda VALUES ('Капитан первого ранга')";
-                    com.ExecuteNonQuery();
-                    connect.Close();
-                }
-                try
-                {
-                    connect.Open();
-                    SqlCommand com = new SqlCommand();
-                    com.CommandText = "SELECT * FROM t_groupe";
-                    com.Connection = connect;
-                    com.ExecuteNonQuery();
-                    connect.Close();
-
-                }
-                catch
-                {
-                    SqlCommand com = new SqlCommand();
-                    com.CommandText = "CREATE TABLE t_groupe (Id INT PRIMARY KEY IDENTITY, unit NVARCHAR (1000))";
-                    com.Connection = connect;
-                    com.ExecuteNonQuery();
-                    connect.Close();
-                }
-                try
-                {
-                    connect.Open();
-                    SqlCommand com = new SqlCommand();
-                    com.CommandText = "SELECT * FROM t_numberGroupe";
-                    com.Connection = connect;
-                    com.ExecuteNonQuery();
-                    connect.Close();
-
-                }
-                catch
-                {
-                    SqlCommand com = new SqlCommand();
-                    com.CommandText = "CREATE TABLE t_numberGroupe (Id INT PRIMARY KEY IDENTITY, numberGroupe NVARCHAR (1000))";
-                    com.Connection = connect;
-                    com.ExecuteNonQuery();
-                    connect.Close();
-                }
-                try
-                {
-                    connect.Open();
-                    SqlCommand com = new SqlCommand();
-                    com.CommandText = "SELECT * FROM t_result";
-                    com.Connection = connect;
-                    com.ExecuteNonQuery();
-                    connect.Close();
-
-                }
-                catch
-                {
-                    SqlCommand com = new SqlCommand();
-                    com.CommandText = "CREATE TABLE t_result (Id INT PRIMARY KEY IDENTITY, Unit NVARCHAR (1000), numberUnit NVARCHAR (1000), zvezda NVARCHAR (1000), Name NVARCHAR (1000), data NVARCHAR (1000), g1 NVARCHAR (1000), g2 NVARCHAR (1000))";
-                    com.Connection = connect;
-                    com.ExecuteNonQuery();
-                    connect.Close();
-                }
-            }
-        }
-
-        private void b_about_Click(object sender, RoutedEventArgs e)
-        {
-            if (TemsTree.SelectedItem != null)
-            {
-                Tems editTems = new Tems(TemsTree.SelectedItem.ToString());
-                editTems.Show();
-            }
-
-        }
-
-        public void refresh()
-        {
-            try
-            {
-                using (SqlConnection conn = new SqlConnection(strSQLConnection()))
-                {
-                    conn.Open();
-                    clearTree(ref TemsTree);
-                    SqlCommand command = new SqlCommand();
-                    command.CommandText = "SELECT * FROM t_tems";
-                    command.Connection = conn;
-                    SqlDataReader read = command.ExecuteReader();
-                    while (read.Read())
+                    string a = "";
+                    using (SqlConnection conn = new SqlConnection(strSQLConnection()))
                     {
-                        TemsTree.Items.Add(read.GetValue(1));
+                        conn.Open();
+                        SqlCommand com = new SqlCommand();
+                        com.CommandText = "SELECT * FROM t_tems";
+                        com.Connection = conn;
+                        SqlDataReader read = com.ExecuteReader();
+                        while (read.Read())
+                        {
+                            if (d == read.GetValue(1).ToString())
+                                a = read.GetValue(7).ToString();
+                        }
+                        if (a == "1")
+                        {
+                            a = "0";
+                        }
+                        else
+                        {
+                            a = "1";
+                        }
+                        com.CommandText = "UPDATE t_tems SET tr = \'" + a +"\' WHERE Name = \'"+d+"\'";
+                        read.Close();
+                        com.ExecuteNonQuery();
+
+                        conn.Close();
                     }
-                    conn.Close();
                 }
-            }
-            catch
-            {
-                MessageBox.Show("Остуствует подключение к MS SQL Servers, провертье наличие таблиц");
+                refeshLB();
             }
         }
 
-        public void clearTree(ref System.Windows.Controls.TreeView a)
+       
+
+        public void clearTree(ref System.Windows.Controls.ListBox a)
         {
             int count = a.Items.Count;
             for (int i = 0; i < count; i++)
@@ -296,12 +203,10 @@ namespace QuadroTestPlatform
                 a.Items.RemoveAt(0);
             }
         }
-
         public string strSQLConnection()
         {
             return "Server=" + Properties.Settings.Default.pathSQL + ";Initial Catalog =QTPDB; User ID = sa; Password = qwerty12";
         }
-
         public void reafreshUnit()
         {
             cb_groupe.Items.Clear();
@@ -329,7 +234,6 @@ namespace QuadroTestPlatform
                 connection.Close();
             }
         }
-
         private void b_createUnit_Click(object sender, RoutedEventArgs e)
         {
             if (tb_nameUnit.Text != null && tb_nameUnit.Text.ToString() != "")
@@ -354,7 +258,6 @@ namespace QuadroTestPlatform
                 }
             }
         }
-
         private void b_deleteUnit_Click(object sender, RoutedEventArgs e)
         {
             if (cb_Unit.SelectedIndex != -1)
@@ -371,7 +274,6 @@ namespace QuadroTestPlatform
                 }
             }
         }
-
         private void b_createGroupe_Click(object sender, RoutedEventArgs e)
         {
             if (tb_groupe.Text != null && tb_groupe.Text.ToString() != "")
@@ -396,7 +298,6 @@ namespace QuadroTestPlatform
                 }
             }
         }
-
         private void b_deleteGroupe_Click(object sender, RoutedEventArgs e)
         {
             if (cb_groupe.SelectedIndex != -1)
@@ -413,7 +314,6 @@ namespace QuadroTestPlatform
                 }
             }
         }
-
         public string searhForID(string id, string table, int numberColumn)
         {
             string answer = null;
@@ -432,6 +332,40 @@ namespace QuadroTestPlatform
                 }
 
             }
+            return answer;
+        }
+        public string timeDay(string time)
+        {
+            string answewr = "";
+            for (int i = 0; time[i] != ' '; i++)
+            {
+                answewr += time[i];
+            }
+
+            return answewr;
+        }
+        public string timeTime(string time)
+        {
+            string answewr = "";
+            int i = 0;
+            for (; time[i] != ' '; i++)
+            {
+
+            }
+            i++;
+            for(;i< time.Length;i++)
+            {
+                answewr += time[i];
+            }
+            return answewr;
+        }
+        public string getVoidSpaceOne(string str, int needSpaace)
+        {
+            string answer = "";
+
+            for (int i = 0; i < needSpaace - str.Length; i++)
+                answer += " ";
+            
             return answer;
         }
 
@@ -454,7 +388,10 @@ namespace QuadroTestPlatform
                     read.Close();
                     con.Close();
                 }
-                set();
+                if (_arrAll.Length != 0)
+                {
+                    set();
+                }
             }
 
             private void set()
@@ -533,14 +470,11 @@ namespace QuadroTestPlatform
                 }
                 return false;
             }
-
             private int _numberInArray;
             private structRead[] _arrStruct; 
             private myStruct[] _arrAll;
             public Personality[] _arr;
         }
-
-
         class Personality
         {
             public Personality (string unit, string numberUnit, string zvezda, string name, string[]date, string[] dis, string[] answerUser)
@@ -562,7 +496,6 @@ namespace QuadroTestPlatform
             public string _name;
             public DisPer[] _arr; 
         }
-
         public class DisPer
         {
             public DisPer(string nameDis, string time, string answerUser)
@@ -596,7 +529,6 @@ namespace QuadroTestPlatform
             public string _nameDis, _time;
             public Question[] _arr; 
         }
-
         public class Question
         {
             public Question(string str)
@@ -643,7 +575,6 @@ namespace QuadroTestPlatform
             public string _IDQuestion;
             public string[] _answer;
         }
-
         public struct myStruct
         {
             public string _unit, _name, numberUnit, _zvezda, _date, _dis, _answerUser;
@@ -688,6 +619,452 @@ namespace QuadroTestPlatform
 
             public string _unit, _numberUnit, _zvezda, _name;
             public string[] _date, _dis, _answerUser;
+        }
+        public class myAll
+        {
+            public myAll(string[] nameDisciplines, string strSQLconnection)
+            {
+                string n = "0";
+                _connectionSQL = strSQLconnection;
+                _arrayDisciplines = new Disciplines[nameDisciplines.Length];
+                for (int i = 0; i < nameDisciplines.Length; i++)
+                {
+
+                    using (SqlConnection con = new SqlConnection(_connectionSQL))
+                    {
+                        con.Open();
+                        SqlCommand com = new SqlCommand("SELECT * FROM t_tems");
+                        com.Connection = con;
+                        SqlDataReader read = com.ExecuteReader();
+                        while (read.Read())
+                        {
+                            if (nameDisciplines[i] == read.GetString(1).ToString())
+                            {
+                                n = read.GetString(5).ToString();
+                            }
+                        }
+                    }
+                    _arrayDisciplines[i] = new Disciplines(nameDisciplines[i], _connectionSQL, Convert.ToInt32(n));
+                }
+            }
+            private string _connectionSQL;
+            public Disciplines[] _arrayDisciplines;
+            public int _count;
+        }
+        public class Disciplines
+        {
+            public Disciplines(string nameDis, string strSQLconnection, int countQuestionTesting)
+            {
+                _nameDisciplines = nameDis;
+                _countQuestionTesting = countQuestionTesting;
+                _connection = new SqlConnection(strSQLconnection);
+                _connection.Open();
+                SqlCommand command = new SqlCommand();
+                command.CommandText = "SELECT * FROM t_tems";
+                command.Connection = _connection;
+                SqlDataReader read = command.ExecuteReader();
+                r = new Random();
+
+                while (read.Read())
+                {
+                    if (read.GetValue(1).ToString() == _nameDisciplines)
+                    {
+                        _tKey = read.GetValue(0).ToString();
+                        _free = Convert.ToInt32(read.GetValue(2).ToString());
+                        _four = Convert.ToInt32(read.GetValue(3).ToString());
+                        _five = Convert.ToInt32(read.GetValue(4).ToString());
+                        _time = Convert.ToInt32(read.GetValue(6).ToString());
+                    }
+                }
+                read.Close();
+                _connection.Close();
+                _arrayQuestion = new QuestionFF[_countQuestionTesting];
+                setQuestion();
+            }
+            public Disciplines(string nameDis, string strSQLconnection, int countQuestionTesting, string[] arrIndex)
+            {
+                _arrIndex = arrIndex;
+                _nameDisciplines = nameDis;
+                _countQuestionTesting = countQuestionTesting;
+                _connection = new SqlConnection(strSQLconnection);
+                _connection.Open();
+                SqlCommand command = new SqlCommand();
+                command.CommandText = "SELECT * FROM t_tems";
+                command.Connection = _connection;
+                SqlDataReader read = command.ExecuteReader();
+                r = new Random();
+
+                while (read.Read())
+                {
+                    if (read.GetValue(1).ToString() == _nameDisciplines)
+                    {
+                        _tKey = read.GetValue(0).ToString();
+                        _free = Convert.ToInt32(read.GetValue(2).ToString());
+                        _four = Convert.ToInt32(read.GetValue(3).ToString());
+                        _five = Convert.ToInt32(read.GetValue(4).ToString());
+                        _time = Convert.ToInt32(read.GetValue(6).ToString());
+                    }
+                }
+                read.Close();
+                _connection.Close();
+                _arrayQuestion = new QuestionFF[_countQuestionTesting];
+                setQuestionArr();
+            }
+            private int countQuestion()
+            {
+                int count = 0;
+                _connection.Open();
+                SqlCommand com = new SqlCommand("SELECT * FROM t_question");
+                com.Connection = _connection;
+                SqlDataReader read = com.ExecuteReader();
+                while (read.Read())
+                {
+                    if (read.GetValue(1).ToString() == _tKey)
+                    {
+                        count++;
+                    }
+                }
+                read.Close();
+                _connection.Close();
+                return count;
+            }
+            private void setQuestion()
+            {
+                int count = 0;
+                QuestionFF[] bufferArrayQuestion = new QuestionFF[countQuestion()];
+                _connection.Open();
+                SqlCommand com = new SqlCommand("SELECT * FROM t_question");
+                com.Connection = _connection;
+                SqlDataReader read = com.ExecuteReader();
+                while (read.Read())
+                {
+                    if (read.GetValue(1).ToString() == _tKey)
+                    {
+                        bufferArrayQuestion[count]._nameQuestrion = read.GetValue(3).ToString();
+                        bufferArrayQuestion[count]._kQuestion = read.GetValue(0).ToString();
+                        bufferArrayQuestion[count]._kTrueAnswer = getArrayKTrueAnswer(read.GetValue(2).ToString());
+                        count++;
+                    }
+                }
+                read.Close();
+                int[] bufNubmerRandom = getArray(bufferArrayQuestion.Length);
+                _connection.Close();
+                for (int i = 0; i < _arrayQuestion.Length; i++)
+                {
+                    _arrayQuestion[i] = bufferArrayQuestion[randomNumber(ref bufNubmerRandom)];
+                    _arrayQuestion[i]._kAnswers = getArrayKAnswer(_arrayQuestion[i]._kQuestion);
+                }
+            }
+            private void setQuestionArr()
+            {
+                int count = 0;
+                QuestionFF[] bufferArrayQuestion = new QuestionFF[countQuestion()];
+                _connection.Open();
+                SqlCommand com = new SqlCommand("SELECT * FROM t_question");
+                com.Connection = _connection;
+                SqlDataReader read = com.ExecuteReader();
+                while (read.Read())
+                {
+                    if (read.GetValue(1).ToString() == _tKey)
+                    {
+                        bufferArrayQuestion[count]._nameQuestrion = read.GetValue(3).ToString();
+                        bufferArrayQuestion[count]._kQuestion = read.GetValue(0).ToString();
+                        bufferArrayQuestion[count]._kTrueAnswer = getArrayKTrueAnswer(read.GetValue(2).ToString());
+                        count++;
+                    }
+                }
+                read.Close();
+                _connection.Close();
+                for (int i = 0; i < _arrIndex.Length; i++)
+                {
+                    for (int j = 0; j < bufferArrayQuestion.Length;j++)
+                    {
+                        if (bufferArrayQuestion[j]._kQuestion == _arrIndex[i])
+                        {
+                            _arrayQuestion[i] = bufferArrayQuestion[j];
+                            _arrayQuestion[i]._kAnswers = getArrayKAnswer(_arrayQuestion[i]._kQuestion);
+
+                        }
+                    }
+                }
+            }
+            private int randomNumber(ref int[] arrInt)
+            {
+                int numberRandom = r.Next(0, arrInt.Length), random = arrInt[numberRandom], count = 0;
+                int[] newArr = new int[arrInt.Length - 1];
+                for (int i = 0; i < arrInt.Length; i++)
+                {
+                    if (i != numberRandom)
+                    {
+                        newArr[count] = arrInt[i];
+                        count++;
+                    }
+                }
+                arrInt = newArr;
+                return random;
+            }
+
+            private int[] getArray(int number)
+            {
+                int[] answer = new int[number];
+                for (int i = 0; i < answer.Length; i++)
+                {
+                    answer[i] = i;
+                }
+
+                return answer;
+            }
+            private string[] getArrayKTrueAnswer(string str)
+            {
+                if (str.Length > 0)
+                {
+                    int count = 0, indexArray = 0;
+                    string buffer = "";
+                    for (int i = 0; i < str.Length; i++)
+                    {
+                        if (str[i] == '|')
+                        {
+                            count++;
+                        }
+                    }
+                    string[] answer = new string[count];
+                    for (int i = 0; i < str.Length; i++)
+                    {
+                        buffer = "";
+                        while (i < str.Length && str[i] != '|')
+                        {
+                            buffer += str[i];
+                            i++;
+                        }
+                        if (buffer != "")
+                        {
+                            answer[indexArray] = buffer;
+                            indexArray++;
+                        }
+                    }
+                    return answer;
+                }
+                return null;
+            }
+            private string[] getArrayKAnswer(string qKey)
+            {
+                string[] str;
+                int _count = 0;
+                _connection.Open();
+                SqlCommand com = new SqlCommand("SELECT * FROM t_answer");
+                com.Connection = _connection;
+                SqlDataReader read = com.ExecuteReader();
+                while (read.Read())
+                {
+                    if (qKey == read.GetValue(1).ToString())
+                        _count++;
+                }
+                str = new string[_count];
+                read.Close();
+                read = com.ExecuteReader();
+                _count = 0;
+                while (read.Read())
+                {
+                    if (qKey == read.GetValue(1).ToString())
+                    {
+                        str[_count] = read.GetValue(0).ToString();
+                        _count++;
+                    }
+                }
+                _connection.Close();
+
+                return str;
+            }
+
+            private string[] _arrIndex;
+            public Random r;
+            private int _countQuestionTesting;
+            public int _five, _four, _free, _time;
+            private string _tKey;
+            public string _nameDisciplines;
+            private SqlConnection _connection;
+            public QuestionFF[] _arrayQuestion;
+        }
+        public struct QuestionFF
+        {
+            public string _nameQuestrion, _kQuestion;
+            public string[] _kAnswers;
+            public string[] _kTrueAnswer; //хранит индекс правильного ответа
+            public string[] _answerUser;
+        }
+        public int getIndex (string str)
+        {
+            string buf = "";
+            for (int i = 0; i < str.Length;i++)
+            {
+                if (str[i] == '.')
+                    return Convert.ToInt32(buf);
+
+                buf += str[i];
+            }
+            
+            return Convert.ToInt32(buf);
+        }
+        private void lBox_PreviewMouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            if (state == 0)
+            {
+                persons = allPerson._arr[allPerson._arr.Length - 1 - lBox.SelectedIndex];
+                state++;
+                lBox.Items.Clear();
+                label_name.Content = persons._name;
+                label_unit.Content = persons._unit;
+                label_zvezda.Content = persons._zvezda;
+                d = new string[persons._arr.Length]; 
+                for (int i = 0; i < persons._arr.Length;i++)
+                {
+                    lBox.Items.Add(
+                        persons._arr[i]._nameDis + 
+                        getVoidSpaceOne(persons._arr[i]._nameDis, 20) +
+                        timeDay(persons._arr[i]._time) + 
+                        getVoidSpaceOne(persons._arr[i]._nameDis + getVoidSpaceOne(persons._arr[i]._nameDis, 20) + timeDay(persons._arr[i]._time),35) +
+                        timeTime(persons._arr[i]._time));
+                    d[i] = persons._arr[i]._nameDis;
+                }
+                return;
+            }
+            if (state == 1)
+            {
+                int countI = 0;
+                string[] bbdd = new string[1];
+                string nameDisIsSelect = d[lBox.SelectedIndex];
+                bbdd[0] = nameDisIsSelect;
+                for (;countI < persons._arr.Length; countI++)
+                {
+                    if (persons._arr[countI]._nameDis == nameDisIsSelect)
+                        break;
+                    
+                }
+                string[] buffArrayIndex = new string[persons._arr[countI]._arr.Length];
+                for (int i = 0; i < buffArrayIndex.Length; i++) 
+                {
+                    buffArrayIndex[i] = persons._arr[countI]._arr[i]._IDQuestion;
+                }
+                Disciplines buf = new Disciplines(nameDisIsSelect, strSQLConnection(), persons._arr[countI]._arr.Length, buffArrayIndex);
+                for (int i =0; i < buf._arrayQuestion.Length;i++)
+                {
+                    buf._arrayQuestion[i]._answerUser = persons._arr[countI]._arr[i]._answer;
+                }
+
+                Result form = new Result(buf, 1, bbdd);
+            }
+        }
+        private void b_backList_Click(object sender, RoutedEventArgs e)
+        {
+            switch (state)
+            {
+                case 0:
+                    break;
+                case 1:
+                    state = 0;
+                    lBox.Items.Clear();
+                    for (int i = allPerson._arr.Length - 1; i > -1; i--)
+                    {
+                        string answer =
+                            Convert.ToString(allPerson._arr.Length - i) +
+                            getVoidSpaceOne(Convert.ToString(allPerson._arr.Length - i), 5) + ///---
+                            allPerson._arr[i]._unit +
+                            getVoidSpaceOne(Convert.ToString(allPerson._arr.Length - i) + getVoidSpaceOne(Convert.ToString(allPerson._arr.Length - i), 5) + allPerson._arr[i]._unit, 20) + ///---
+                            allPerson._arr[i]._zvezda +
+                            getVoidSpaceOne(Convert.ToString(allPerson._arr.Length - i) +
+                            getVoidSpaceOne(Convert.ToString(allPerson._arr.Length - i), 5) + ///---
+                            allPerson._arr[i]._unit +
+                            getVoidSpaceOne(Convert.ToString(allPerson._arr.Length - i) + getVoidSpaceOne(Convert.ToString(allPerson._arr.Length - i), 5) + allPerson._arr[i]._unit, 20) + ///---
+                            allPerson._arr[i]._zvezda, 50) + ///---
+                            allPerson._arr[i]._name +
+                            getVoidSpaceOne(Convert.ToString(allPerson._arr.Length - i) +
+                            getVoidSpaceOne(Convert.ToString(allPerson._arr.Length - i), 5) + ///---
+                            allPerson._arr[i]._unit +
+                            getVoidSpaceOne(Convert.ToString(allPerson._arr.Length - i) + getVoidSpaceOne(Convert.ToString(allPerson._arr.Length - i), 5) + allPerson._arr[i]._unit, 20) + ///---
+                            allPerson._arr[i]._zvezda +
+                            getVoidSpaceOne(Convert.ToString(allPerson._arr.Length - i) +
+                            getVoidSpaceOne(Convert.ToString(allPerson._arr.Length - i), 5) + ///---
+                            allPerson._arr[i]._unit +
+                            getVoidSpaceOne(Convert.ToString(allPerson._arr.Length - i) + getVoidSpaceOne(Convert.ToString(allPerson._arr.Length - i), 5) + allPerson._arr[i]._unit, 20) + ///---
+                            allPerson._arr[i]._zvezda, 50) + ///---
+                            allPerson._arr[i]._name, 75) + ///---
+                            allPerson._arr[i]._numberUnit;
+                        lBox.Items.Add(answer);
+                    }
+                    label_name.Content = null;
+                    label_unit.Content = null;
+                    label_zvezda.Content = null;
+                    break;
+                default:
+                    break;
+            }
+
+        }
+        private void lb__MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            if (lb_.SelectedIndex != -1)
+            {
+                Tems form = new Tems(getNameTemsFromStr(lb_.Items[lb_.SelectedIndex].ToString()));
+                form.ShowDialog();
+            }
+        }
+        public void refeshLB ()
+        {
+            lb_.Items.Clear();
+            using (SqlConnection c = new SqlConnection(strSQLConnection()))
+            {
+                string OnOrOf;
+                int countTemsForLB = 1;
+                c.Open();
+                SqlCommand com = new SqlCommand("SELECT * FROM t_tems");
+                com.Connection = c;
+                SqlDataReader read = com.ExecuteReader();
+                while (read.Read())
+                {
+                    if (read.GetValue(7).ToString() == "1")
+                    {
+                        OnOrOf = "Вкл";
+                    }
+                    else
+                    {
+                        OnOrOf = "Выкл";
+                    }
+                    lb_.Items.Add(
+                        Convert.ToString(countTemsForLB) + "." +
+                        getVoidSpaceOne(Convert.ToString(countTemsForLB) + ".", 15) +
+                        read.GetValue(1).ToString() +
+                        getVoidSpaceOne(Convert.ToString(countTemsForLB) + "." +
+                        getVoidSpaceOne(Convert.ToString(countTemsForLB) + ".", 15) +
+                        read.GetValue(1).ToString(), 40) + OnOrOf
+                        );
+                }
+                read.Close();
+                c.Close();
+            }
+        }
+        public string getNameTemsFromStr(string str)
+        {
+            string ansewr = "";
+            int i = 1;
+            for (; i < str.Length; i++)
+            {
+                if (str[i - 1] == '.') 
+                    break;
+            }
+            for (; i < str.Length; i++)
+            {
+                if (str[i] == 'В')
+                    break;
+                ansewr += str[i];
+                
+            }
+
+
+            return ansewr.Trim();
+        }
+        private void b_refresh_Click(object sender, RoutedEventArgs e)
+        {
+            refeshLB();
         }
     }
 }

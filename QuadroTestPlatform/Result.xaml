@@ -1,0 +1,22 @@
+﻿<Window x:Class="QuadroTestPlatform.Result"
+        ResizeMode="CanMinimize"
+        Topmost="True"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:QuadroTestPlatform"
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
+        Title="Result" Height="450" Width="800" Visibility="Visible" WindowStyle="SingleBorderWindow">
+    <Grid>
+        <ScrollViewer>
+            <StackPanel x:Name="SP">
+                <TextBlock TextWrapping="Wrap" Text="" Height="20"/>
+                <Button x:Name="bt_next"  Content="Следущая тема" Width="200" Click="bt_next_Click" />
+                <TextBlock TextWrapping="Wrap" Text="" Height="100"/>
+                <TextBlock x:Name="result" TextWrapping="Wrap" Text="" Height="50" Width="730"/>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</Window>
