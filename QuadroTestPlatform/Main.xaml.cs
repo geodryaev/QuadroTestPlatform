@@ -1,10 +1,19 @@
 ﻿using System;
+using System.ComponentModel;
+using System.Data;
 using System.Data.SqlClient;
 using System.Reflection.Emit;
 using System.Security.Policy;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Xml.Serialization;
+using Microsoft.Office.Interop.Excel;
+using Microsoft.Win32;
+using OfficeOpenXml.Style;
+using Excel = Microsoft.Office.Interop.Excel;
+using Window = System.Windows.Window;
 
 namespace QuadroTestPlatform
 {
@@ -20,7 +29,7 @@ namespace QuadroTestPlatform
         {
             InitializeComponent();
             state = 0;
-            
+
             try
             {
                 using (SqlConnection conn = new SqlConnection(strSQLConnection()))
@@ -42,7 +51,7 @@ namespace QuadroTestPlatform
                         {
                             buf = "Выкл.";
                         }
-                        lBox.Items.Add(read.GetValue(1).ToString() + getVoidSpaceOne(read.GetValue(1).ToString(), 30) + buf);
+                        lb_.Items.Add(read.GetValue(1).ToString() + getVoidSpaceOne(read.GetValue(1).ToString(), 30) + buf);
                     }
                     read.Close();
                     command.CommandText = "SELECT * FROM t_groupe";
@@ -125,28 +134,13 @@ namespace QuadroTestPlatform
             {
                 MessageBox.Show("Остуствует подключение к MS SQL Servers, провертье наличие таблиц");
             }
-        }
+}
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             CreateNewTems form = new CreateNewTems();
             form.ShowDialog();
-            //if (TextBoxNameTems.Text.ToString() != null && TextBoxNameTems.Text.ToString() != "")
-            //{
-            //    using (SqlConnection conn = new SqlConnection(strSQLConnection()))
-            //    {
-            //        conn.Open();
-            //        SqlCommand comm = new SqlCommand();
-            //        comm.CommandText = "INSERT INTO t_tems (Name, tree, four, five, CountQMax, time) VALUES (\'" + TextBoxNameTems.Text.ToString().Trim() + "\', 3, 2, 1, 20, 3)";
-            //        comm.Connection = conn;
-            //        comm.ExecuteNonQuery();
-            //        conn.Close();
-            //        refresh();
-            //    }
-            //}
-            //TextBoxNameTems.Text = ""; 
         }
-
         private void b_deleteTems_Click(object sender, RoutedEventArgs e)
         {
             if (lb_.SelectedIndex != -1)
@@ -192,9 +186,6 @@ namespace QuadroTestPlatform
                 refeshLB();
             }
         }
-
-       
-
         public void clearTree(ref System.Windows.Controls.ListBox a)
         {
             int count = a.Items.Count;
@@ -368,7 +359,6 @@ namespace QuadroTestPlatform
             
             return answer;
         }
-
         class AllPerson
         {
             public AllPerson(string sqlConnection)
@@ -475,7 +465,7 @@ namespace QuadroTestPlatform
             private myStruct[] _arrAll;
             public Personality[] _arr;
         }
-        class Personality
+        public class Personality
         {
             public Personality (string unit, string numberUnit, string zvezda, string name, string[]date, string[] dis, string[] answerUser)
             {
@@ -490,6 +480,7 @@ namespace QuadroTestPlatform
                 }
             }
 
+            public int _ozenka;
             public string _unit;
             public string _numberUnit;
             public string _zvezda;
@@ -673,7 +664,7 @@ namespace QuadroTestPlatform
                         _free = Convert.ToInt32(read.GetValue(2).ToString());
                         _four = Convert.ToInt32(read.GetValue(3).ToString());
                         _five = Convert.ToInt32(read.GetValue(4).ToString());
-                        _time = Convert.ToInt32(read.GetValue(6).ToString());
+                        _time = Convert.ToDouble(read.GetValue(6).ToString());
                     }
                 }
                 read.Close();
@@ -702,7 +693,7 @@ namespace QuadroTestPlatform
                         _free = Convert.ToInt32(read.GetValue(2).ToString());
                         _four = Convert.ToInt32(read.GetValue(3).ToString());
                         _five = Convert.ToInt32(read.GetValue(4).ToString());
-                        _time = Convert.ToInt32(read.GetValue(6).ToString());
+                        _time = Convert.ToDouble(read.GetValue(6).ToString());
                     }
                 }
                 read.Close();
@@ -738,7 +729,7 @@ namespace QuadroTestPlatform
                 SqlDataReader read = com.ExecuteReader();
                 while (read.Read())
                 {
-                    if (read.GetValue(1).ToString() == _tKey)
+                    if (read.GetValue(1).ToString() == _tKey && read.GetValue(4).ToString() == "0")
                     {
                         bufferArrayQuestion[count]._nameQuestrion = read.GetValue(3).ToString();
                         bufferArrayQuestion[count]._kQuestion = read.GetValue(0).ToString();
@@ -749,11 +740,15 @@ namespace QuadroTestPlatform
                 read.Close();
                 int[] bufNubmerRandom = getArray(bufferArrayQuestion.Length);
                 _connection.Close();
-                for (int i = 0; i < _arrayQuestion.Length; i++)
+                if(bufNubmerRandom.Length !=0)
                 {
-                    _arrayQuestion[i] = bufferArrayQuestion[randomNumber(ref bufNubmerRandom)];
-                    _arrayQuestion[i]._kAnswers = getArrayKAnswer(_arrayQuestion[i]._kQuestion);
+                    for (int i = 0; i < _arrayQuestion.Length; i++)
+                    {
+                        _arrayQuestion[i] = bufferArrayQuestion[randomNumber(ref bufNubmerRandom)];
+                        _arrayQuestion[i]._kAnswers = getArrayKAnswer(_arrayQuestion[i]._kQuestion);
+                    }
                 }
+                
             }
             private void setQuestionArr()
             {
@@ -879,7 +874,8 @@ namespace QuadroTestPlatform
             private string[] _arrIndex;
             public Random r;
             private int _countQuestionTesting;
-            public int _five, _four, _free, _time;
+            public int _five, _four, _free;
+            public double _time;
             private string _tKey;
             public string _nameDisciplines;
             private SqlConnection _connection;
@@ -1014,7 +1010,7 @@ namespace QuadroTestPlatform
             using (SqlConnection c = new SqlConnection(strSQLConnection()))
             {
                 string OnOrOf;
-                int countTemsForLB = 1;
+                int countTemsForLB = 0;
                 c.Open();
                 SqlCommand com = new SqlCommand("SELECT * FROM t_tems");
                 com.Connection = c;
@@ -1029,14 +1025,12 @@ namespace QuadroTestPlatform
                     {
                         OnOrOf = "Выкл";
                     }
+                    countTemsForLB++;
                     lb_.Items.Add(
                         Convert.ToString(countTemsForLB) + "." +
-                        getVoidSpaceOne(Convert.ToString(countTemsForLB) + ".", 15) +
+                        getVoidSpaceOne(Convert.ToString(countTemsForLB) + ".", 4) +
                         read.GetValue(1).ToString() +
-                        getVoidSpaceOne(Convert.ToString(countTemsForLB) + "." +
-                        getVoidSpaceOne(Convert.ToString(countTemsForLB) + ".", 15) +
-                        read.GetValue(1).ToString(), 40) + OnOrOf
-                        );
+                        getVoidSpaceOne(Convert.ToString(countTemsForLB) + "." + getVoidSpaceOne(Convert.ToString(countTemsForLB) + ".", 4) + read.GetValue(1).ToString(), 45) + OnOrOf);
                 }
                 read.Close();
                 c.Close();
@@ -1065,6 +1059,200 @@ namespace QuadroTestPlatform
         private void b_refresh_Click(object sender, RoutedEventArgs e)
         {
             refeshLB();
+        }
+        private void b_download_Click(object sender, RoutedEventArgs e)
+        {
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            if(saveFileDialog.ShowDialog() == true)
+            {
+                Excel.Application app;
+                Excel.Workbook book;
+                Excel.Worksheet sheet;
+
+                app = new Excel.Application();
+                book = app.Workbooks.Add();
+                sheet = (Excel.Worksheet)book.Worksheets.get_Item(1);
+                DownloadExscel(sheet);
+
+                book.SaveAs(saveFileDialog.FileName);
+                book.Close(true);
+                app.Quit();
+            }
+        }
+        //row,column
+        public void DownloadExscel (Excel.Worksheet sheet)
+        {
+            int indexWrite = 0;
+            sheet.Cells[1,1] = "№";
+            sheet.Cells[1,1].Font.Bold = true;
+            sheet.Cells[1,2] = "Подраздение";
+            sheet.Cells[1,2].Font.Bold = true; ;
+            sheet.Cells[1,3] = "Воинское звание";
+            sheet.Cells[1,3].Font.Bold = true; 
+            sheet.Cells[1,4] = "ФИО";
+            sheet.Cells[1,4].Font.Bold = true;
+            sheet.Cells[1,5] = "Дата";
+            sheet.Cells[1,5].Font.Bold = true;
+            int row = 1;
+
+            for (int i = 0; i < allPerson._arr.Length; i++) 
+            {
+                for (int j = 0; j < allPerson._arr[i]._arr.Length; j++) 
+                {
+                    if (timeDay(allPerson._arr[i]._arr[j]._time) != sheet.Cells[row, 5].Text)
+                    {
+                        row++;
+                        indexWrite++;
+                        sheet.Cells[row, 1] = indexWrite;
+                        sheet.Cells[row, 2] = allPerson._arr[i]._unit;
+                        sheet.Cells[row, 3] = allPerson._arr[i]._zvezda;
+                        sheet.Cells[row, 4] = allPerson._arr[i]._name;
+                    }
+
+                    if (IsExsistExcel(allPerson._arr[i]._arr[j]._nameDis, sheet) == -1)
+                    {
+
+                        int buf = newIndexDisExcel(sheet, allPerson._arr[i]._arr[j]._nameDis);
+                        sheet.Cells[row, buf] = getOz(allPerson._arr[i], j, all);
+
+                        switch (sheet.Cells[row, buf].Text)
+                        {
+                            case "5":
+                                sheet.Cells[row, buf].Interior.Color = Excel.XlRgbColor.rgbGreen;
+                                break;
+                            case "4":
+                                sheet.Cells[row, buf].Interior.Color = Excel.XlRgbColor.rgbYellow;
+                                break;
+                            case "3":
+                                sheet.Cells[row, buf].Interior.Color = Excel.XlRgbColor.rgbOrange;
+                                break;
+                            case "2":
+                                sheet.Cells[row, buf].Interior.Color = Excel.XlRgbColor.rgbRed;
+                                break;
+                            default:
+                                break;
+                        }
+                        sheet.Cells[row, 5] = timeDay(allPerson._arr[i]._arr[j]._time);
+                    }
+                    else
+                    {
+                        if (sheet.Cells[row, IndexDisExcel(sheet, allPerson._arr[i]._arr[j]._nameDis)].Text != "")
+                        {
+                            row++;
+                            indexWrite++;
+                            sheet.Cells[row, 1] = indexWrite;
+                            sheet.Cells[row, 2] = allPerson._arr[i]._unit;
+                            sheet.Cells[row, 3] = allPerson._arr[i]._zvezda;
+                            sheet.Cells[row, 4] = allPerson._arr[i]._name;
+                        }
+                        sheet.Cells[row, IndexDisExcel(sheet, allPerson._arr[i]._arr[j]._nameDis)] = getOz(allPerson._arr[i], j, all);
+                        switch (sheet.Cells[row, IndexDisExcel(sheet, allPerson._arr[i]._arr[j]._nameDis)].Text)
+                        {
+                            case "5":
+                                sheet.Cells[row, IndexDisExcel(sheet, allPerson._arr[i]._arr[j]._nameDis)].Interior.Color = Excel.XlRgbColor.rgbGreen;
+                                break;
+                            case "4":
+                                sheet.Cells[row, IndexDisExcel(sheet, allPerson._arr[i]._arr[j]._nameDis)].Interior.Color = Excel.XlRgbColor.rgbYellow;
+                                break;
+                            case "3":
+                                sheet.Cells[row, IndexDisExcel(sheet, allPerson._arr[i]._arr[j]._nameDis)].Interior.Color = Excel.XlRgbColor.rgbOrange;
+                                break;
+                            case "2":
+                                sheet.Cells[row, IndexDisExcel(sheet, allPerson._arr[i]._arr[j]._nameDis)].Interior.Color = Excel.XlRgbColor.rgbRed;
+                                break;
+                            default:
+                                break;
+                        }
+                        if (timeDay(allPerson._arr[i]._arr[j]._time) != sheet.Cells[row, 5].Text)
+                        {
+                            sheet.Cells[row, 5] = timeDay(allPerson._arr[i]._arr[j]._time);
+                        }
+
+                    }
+                }
+            }
+
+
+
+            int allRow = 1, allColumn = 1;
+
+            for (int i = 1; sheet.Cells[i, 1].Text() != ""; i++)
+            {
+                for (int j = 1; sheet.Cells[1, j].Text() != ""; j++) 
+                {
+                    sheet.Cells[i, j].Borders.LineStyle = XlLineStyle.xlContinuous;
+                    sheet.Cells[i, j].Borders.Weight = XlBorderWeight.xlThin;
+                }
+                allRow++;
+            }
+            for(int i=1; sheet.Cells[1,i].Text() != "";i++)
+            {
+                sheet.Cells[1, i].Borders.LineStyle = XlLineStyle.xlContinuous;
+                sheet.Cells[1, i].Borders.Weight = XlBorderWeight.xlThick;
+                allColumn++;
+            }
+            sheet.ListObjects.Add(XlListObjectSourceType.xlSrcRange, sheet.Range[sheet.Cells[1, 1], sheet.Cells[allRow,allColumn]].CurrentRegion, Type.Missing, XlYesNoGuess.xlYes).Name = "Таблица1";
+            //sheet.get_Range(sheet.Cells[1, 1], sheet.Cells[allRow, allColumn].InsertTable(dataTable, "Name of table", true);
+
+            sheet.Columns.Font.Size = 14;
+            sheet.Columns.Font.Name = "Times New Roman";
+            sheet.Columns.AutoFit();
+            sheet.Rows.AutoFit();
+            sheet.Columns.Style.HorizontalAlignment = ExcelHorizontalAlignment.CenterContinuous;
+        }
+        public int newIndexDisExcel (Excel.Worksheet sheet,string dis)
+        {
+            int i = 5;
+            while (sheet.Cells[1, i].Text != null && sheet.Cells[1, i].Text != "")
+            {
+                i++;
+            }
+            sheet.Cells[1, i] = dis;
+            sheet.Cells[1, i].Font.Bold = true;
+            return i;
+        }
+
+        public int IndexDisExcel (Worksheet sheet, string dis)
+        {
+            int i = 1;
+            while (sheet.Cells[1,i].Text != dis)
+            {
+                i++;
+            }
+            return i;
+        }
+        public int IsExsistExcel(string str, Excel.Worksheet sheet)
+        {
+            int i = 5;
+            while (sheet.Cells[1,i].Text != null && sheet.Cells[1, i].Text != "")
+            {
+                if(str == sheet.Cells[1, i].Text)
+                {
+                    return i;
+                }
+                i++;
+            }
+            return -1;
+        }
+
+        public int getOz(Personality a, int j ,myAll all)
+        {
+            using (SqlConnection c = new SqlConnection(strSQLConnection()))
+            {
+                c.Open();
+                SqlCommand command = new SqlCommand("SELECT * FROM t_result");
+                command.Connection = c;
+                SqlDataReader read = command.ExecuteReader();
+                while (read.Read())
+                {
+                    string ass= read.GetValue(2).ToString();
+                    if (read.GetValue(1).ToString() == a._unit && read.GetValue(3).ToString() == a._zvezda && read.GetValue(4).ToString() ==a._name && read.GetValue(6).ToString() == a._arr[j]._nameDis && read.GetValue(5).ToString() == a._arr[j]._time)
+                    {
+                        return Convert.ToInt32(read.GetValue(8).ToString());
+                    }
+                }
+            }
+            return -1;
         }
     }
 }

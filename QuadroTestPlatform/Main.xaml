@@ -20,12 +20,12 @@
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
-                    <TextBlock Margin="106,5,480,371" FontSize="22">Темы тестирования</TextBlock>
-                    <Button x:Name="b_addtems" Content="Добавить тему" HorizontalAlignment="Left" Margin="429,35,0,0" VerticalAlignment="Top" Click="Button_Click" Width="107"/>
-                    <Button x:Name="b_offTems" Content="Выключить тему" HorizontalAlignment="Left" Margin="429,0,0,0" VerticalAlignment="Center" Width="107" Click="b_deleteTems_Click"/>
-                    <ListBox x:Name="lb_" d:ItemsSource="{d:SampleData ItemCount=10}" Width="400" Margin="10,35,384,45" MouseDoubleClick="lb__MouseDoubleClick"/>
-                    <Button x:Name="b_deleteTems" Content="Удалить" HorizontalAlignment="Left" Margin="429,357,0,0" VerticalAlignment="Top" Width="107" Click="b_deleteTems_Click"/>
-                    <Button x:Name="b_refresh" Content="Обновить" HorizontalAlignment="Left" Margin="677,35,0,0" VerticalAlignment="Top" Width="107" Click="b_refresh_Click"/>
+                    <TextBlock Margin="206,0,380,376" FontSize="22">Темы тестирования</TextBlock>
+                    <Button x:Name="b_addtems" Content="Добавить тему" HorizontalAlignment="Left" Margin="615,35,0,0" VerticalAlignment="Top" Click="Button_Click" Width="158" FontFamily="Times New Roman" FontSize="20"/>
+                    <Button x:Name="b_offTems" Content="Выключить тему" HorizontalAlignment="Left" Margin="615,0,0,0" VerticalAlignment="Center" Width="158" Click="b_deleteTems_Click" FontFamily="Times New Roman" FontSize="20"/>
+                    <ListBox x:Name="lb_" d:ItemsSource="{d:SampleData ItemCount=10}" Margin="10,35,184,45" MouseDoubleClick="lb__MouseDoubleClick" FontFamily="Courier New" FontSize="20"/>
+                    <Button x:Name="b_deleteTems" Content="Удалить" HorizontalAlignment="Left" Margin="615,350,0,0" VerticalAlignment="Top" Width="158" Click="b_deleteTems_Click" FontFamily="Times New Roman" FontSize="20"/>
+                    <Button x:Name="b_refresh" Content="Обновить" HorizontalAlignment="Left" Margin="615,67,0,0" VerticalAlignment="Top" Width="158" Click="b_refresh_Click" FontFamily="Times New Roman" FontSize="20"/>
                 </Grid>
             </TabItem>
             <TabItem Header="Выбираемые данные">
@@ -39,16 +39,25 @@
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
-                    <TextBlock HorizontalAlignment="Left" Margin="27,10,0,0" TextWrapping="Wrap" Text="Подразделения" VerticalAlignment="Top"/>
-                    <TextBlock HorizontalAlignment="Left" Margin="678,10,0,0" TextWrapping="Wrap" Text="Учебные группы" VerticalAlignment="Top"/>
-                    <ComboBox x:Name="cb_Unit" HorizontalAlignment="Left" Margin="10,31,0,0" VerticalAlignment="Top" Width="120"/>
-                    <Button x:Name="b_createUnit" Content="Добавить" HorizontalAlignment="Left" Margin="157,64,0,0" VerticalAlignment="Top" Width="120" Click="b_createUnit_Click"/>
-                    <Button x:Name="b_deleteUnit" Content="Удалить" HorizontalAlignment="Left" Margin="10,64,0,0" VerticalAlignment="Top" Width="120" Click="b_deleteUnit_Click"/>
-                    <TextBox x:Name="tb_nameUnit" HorizontalAlignment="Left" Margin="157,31,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="22"/>
-                    <ComboBox x:Name="cb_groupe" HorizontalAlignment="Left" Margin="664,31,0,0" VerticalAlignment="Top" Width="120"/>
-                    <TextBox x:Name="tb_groupe" HorizontalAlignment="Left" Margin="525,31,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="22"/>
-                    <Button x:Name="b_deleteGroupe" Content="Удалить" HorizontalAlignment="Left" Margin="664,64,0,0" VerticalAlignment="Top" Width="120" Click="b_deleteGroupe_Click"/>
-                    <Button x:Name="b_createGroupe" Content="Добавить" HorizontalAlignment="Left" Margin="525,64,0,0" VerticalAlignment="Top" Width="120" Click="b_createGroupe_Click"/>
+                    <TextBlock HorizontalAlignment="Left" TextAlignment="Center" Margin="11,25,0,0" TextWrapping="Wrap" Text="Подразделения" VerticalAlignment="Top" FontFamily="Times New Roman" FontSize="24" Width="267"/>
+                    <TextBlock HorizontalAlignment="Left" TextAlignment="Center" Margin="485,10,0,0" TextWrapping="Wrap" Text="Не работает" VerticalAlignment="Top" Width="259" RenderTransformOrigin="0.5,0.5" Foreground="Red">
+                        <TextBlock.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform/>
+                                <SkewTransform/>
+                                <RotateTransform Angle="0.147"/>
+                                <TranslateTransform/>
+                            </TransformGroup>
+                        </TextBlock.RenderTransform>
+                    </TextBlock>
+                    <ComboBox x:Name="cb_Unit" HorizontalAlignment="Left" Margin="31,284,0,0" VerticalAlignment="Top" Width="247" FontFamily="Times New Roman" FontSize="20"/>
+                    <Button x:Name="b_createUnit" Content="Добавить" HorizontalAlignment="Left" Margin="31,112,0,0" VerticalAlignment="Top" Width="247" Click="b_createUnit_Click" FontFamily="Times New Roman" FontSize="20"/>
+                    <Button x:Name="b_deleteUnit" Content="Удалить" HorizontalAlignment="Left" Margin="31,250,0,0" VerticalAlignment="Top" Width="247" Click="b_deleteUnit_Click" FontFamily="Times New Roman" FontSize="20"/>
+                    <TextBox x:Name="tb_nameUnit" HorizontalAlignment="Left" Margin="31,66,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="247" Height="29" FontFamily="Times New Roman" FontSize="20"/>
+                    <ComboBox x:Name="cb_groupe"  Visibility="Hidden" HorizontalAlignment="Left" Margin="624,31,0,0" VerticalAlignment="Top" Width="120"/>
+                    <TextBox x:Name="tb_groupe" Visibility="Hidden" HorizontalAlignment="Left" Margin="485,31,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="22"/>
+                    <Button x:Name="b_deleteGroupe" Visibility="Hidden" Content="Удалить" HorizontalAlignment="Left" Margin="624,64,0,0" VerticalAlignment="Top" Width="120" Click="b_deleteGroupe_Click"/>
+                    <Button x:Name="b_createGroupe" Visibility="Hidden" Content="Добавить" HorizontalAlignment="Left" Margin="485,64,0,0" VerticalAlignment="Top" Width="120" Click="b_createGroupe_Click"/>
 
                 </Grid>
             </TabItem>
@@ -61,7 +70,7 @@
                 </TabItem.Background>
                 <Grid Width="800" Height="400">
                     <ListBox x:Name="lBox" d:ItemsSource="{d:SampleData ItemCount=5}"  Padding="10" Margin="10,53,10,75" PreviewMouseDoubleClick="lBox_PreviewMouseDoubleClick" FontFamily="Courier New" FontSize="14"/>
-                    <Button x:Name="b_download" Content="Выгрузить" HorizontalAlignment="Left" Margin="644,336,0,0" VerticalAlignment="Top" Width="103"/>
+                    <Button x:Name="b_download" Content="Выгрузить" HorizontalAlignment="Left" Margin="644,336,0,0" VerticalAlignment="Top" Width="103" Click="b_download_Click"/>
                     <Button x:Name="b_backList" Content="Назад" HorizontalAlignment="Left" Margin="50,28,0,0" VerticalAlignment="Top" Width="112" Click="b_backList_Click"/>
                     <Label x:Name="label_name" Content="" HorizontalAlignment="Left" Margin="179,25,0,0" VerticalAlignment="Top" Width="100"/>
                     <Label x:Name="label_zvezda" Content="" HorizontalAlignment="Center" Margin="0,25,0,0" VerticalAlignment="Top" Width="176"/>

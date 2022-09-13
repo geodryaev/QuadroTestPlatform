@@ -153,6 +153,10 @@ namespace QuadroTestPlatform
                             _tb[_tb.Length - 1].Text += "\n\t " + Convert.ToString(i + 1) + ". " + read.GetValue(2).ToString();
                         }
                     }
+                    if (blue(q, q._kAnswers[i]))
+                    {
+                        _tb[_tb.Length - 1].Foreground = Brushes.Blue;
+                    }
                     if (red(q, q._kAnswers[i]))
                     {
                         _tb[_tb.Length - 1].Foreground = Brushes.Red;
@@ -179,6 +183,21 @@ namespace QuadroTestPlatform
                 }
                 return false;
             }
+
+            private bool blue(Main.QuestionFF q, string str)
+            {
+                if (q._answerUser == null)
+                    return false;
+
+                for (int i = 0; i < q._kTrueAnswer.Length; i++) 
+                {
+                    if (q._kTrueAnswer[i] == str)
+                    {
+                        return true;
+                    }
+                }
+                return false;
+            }
             private bool green(Main.QuestionFF q, string key)
             {
                 if (q._answerUser == null)
@@ -195,7 +214,6 @@ namespace QuadroTestPlatform
                         }
                     }
                 }
-             
                 return false;
             }
 

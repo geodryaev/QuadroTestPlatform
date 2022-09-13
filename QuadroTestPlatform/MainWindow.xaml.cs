@@ -210,7 +210,7 @@ namespace QuadroTestPlatform
                 catch
                 {
                     SqlCommand com = new SqlCommand();
-                    com.CommandText = "CREATE TABLE t_result (Id INT PRIMARY KEY IDENTITY, Unit NVARCHAR (1000), numberUnit NVARCHAR (1000), zvezda NVARCHAR (1000), Name NVARCHAR (1000), data NVARCHAR (1000), g1 NVARCHAR (1000), g2 NVARCHAR (1000))";
+                    com.CommandText = "CREATE TABLE t_result (Id INT PRIMARY KEY IDENTITY, Unit NVARCHAR (1000), numberUnit NVARCHAR (1000), zvezda NVARCHAR (1000), Name NVARCHAR (1000), data NVARCHAR (1000), g1 NVARCHAR (1000), g2 NVARCHAR (1000), ozenka NVARCHAR (1000))";
                     com.Connection = connect;
                     com.ExecuteNonQuery();
                     connect.Close();
