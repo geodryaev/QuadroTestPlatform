@@ -395,6 +395,42 @@ namespace QuadroTestPlatform
 
             return arrayStr;
         }
+
+        private void button_multiplayQuestion_Click(object sender, RoutedEventArgs e)
+        {
+            TextBox[] arrayTB = new TextBox[7];
+            arrayTB[0] = tb_nameQuestion;
+            arrayTB[1] = tb_answer1;
+            arrayTB[2] = tb_answer2;
+            arrayTB[3] = tb_answer3;
+            arrayTB[4] = tb_answer4;
+            arrayTB[5] = tb_answer5;
+            arrayTB[6] = tb_answer6;
+            int count = 0;
+            string bufer = tb_nameQuestion.Text;
+            tb_nameQuestion.Text = "";
+            tb_answer1.Text = "";
+            tb_answer2.Text = "";
+            tb_answer3.Text = "";
+            tb_answer4.Text = "";
+            tb_answer5.Text = "";
+            tb_answer6.Text = "";
+            for (int i = 0;i < bufer.Length;i++)
+            {
+                if (bufer[i] != '\n')
+                    arrayTB[count].Text += bufer[i];
+                else
+                {
+                    count++;
+                    if (count == 7)
+                        break;
+                }
+                
+            }
+
+        }
+
+        
         public void SetCheckOne(string str)
         {
             for (int i = 0; i < 6; i++)

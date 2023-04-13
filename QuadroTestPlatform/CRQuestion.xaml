@@ -21,9 +21,10 @@
         <CheckBox x:Name="cb_true4" Content="" HorizontalAlignment="Left" Margin="227,465,0,0" VerticalAlignment="Top"/>
         <CheckBox x:Name="cb_true5" Content="" HorizontalAlignment="Left" Margin="227,542,0,0" VerticalAlignment="Top"/>
         <CheckBox x:Name="cb_true6" Content="" HorizontalAlignment="Left" Margin="227,619,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="tb_nameQuestion" HorizontalAlignment="Center" Margin="0,38,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="1016" Height="58"/>
+        <TextBox x:Name="tb_nameQuestion" HorizontalAlignment="Center" AcceptsReturn="True" Margin="0,38,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="1016" Height="58"/>
         <TextBlock HorizontalAlignment="Center" Margin="0,10,0,0" TextWrapping="Wrap" Text="Формулировка вопроса" VerticalAlignment="Top" Width="133"/>
         <TextBlock HorizontalAlignment="Center" Margin="0,170,0,0" TextWrapping="Wrap" Text="Ответы" VerticalAlignment="Top"/>
+        <Button x:Name="button_multiplayQuestion" Content="Мульти вопрос" HorizontalAlignment="Left" Margin="18,106,0,0" VerticalAlignment="Top" Width="138" FontSize="14" FontFamily="Times New Roman" Click="button_multiplayQuestion_Click"/>
 
     </Grid>
 </Window>
