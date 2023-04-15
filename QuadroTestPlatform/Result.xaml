@@ -1,5 +1,5 @@
 ﻿<Window x:Class="QuadroTestPlatform.Result"
-        ResizeMode="CanMinimize"
+        ResizeMode="NoResize"
         Topmost="True"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -8,7 +8,7 @@
         xmlns:local="clr-namespace:QuadroTestPlatform"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
-        Title="Result" Height="450" Width="800" Visibility="Visible" WindowStyle="SingleBorderWindow">
+        Title="Result" Height="450" Width="800" Visibility="Visible" WindowStyle="SingleBorderWindow" >
     <Grid>
         <ScrollViewer>
             <StackPanel x:Name="SP">

@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:QuadroTestPlatform"
         WindowStartupLocation="CenterScreen"
         mc:Ignorable="d"
-        Title="QTP 1.0" Height="176" Width="500">
+        Title="QTP 1.0" Height="180" Width="500" ResizeMode="NoResize">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="500"/>

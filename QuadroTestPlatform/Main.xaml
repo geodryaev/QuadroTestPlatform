@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:QuadroTestPlatform"
         WindowStartupLocation="CenterScreen"
         mc:Ignorable="d"
-        Title="QTP 1.0" Height="450" Width="800">
+        Title="QTP 1.0" Height="450" Width="800" RenderTransformOrigin="0.5,0.5">
     <Grid Width="800" Height="450">
         <TabControl Background="#FF585858" BorderBrush="#FF585858">
             <TabItem Header="Просмотр тестов">
