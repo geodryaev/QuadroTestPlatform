@@ -23,7 +23,7 @@
                     </Grid.ColumnDefinitions>
                     <TextBlock Margin="206,0,380,376" FontSize="22">Темы тестирования</TextBlock>
                     <Button x:Name="b_addtems" Content="Добавить тему" HorizontalAlignment="Left" Margin="615,35,0,0" VerticalAlignment="Top" Click="Button_Click" Width="158" FontFamily="Times New Roman" FontSize="20"/>
-                    <Button x:Name="b_offTems" Content="Выключить тему" HorizontalAlignment="Left" Margin="615,0,0,0" VerticalAlignment="Center" Width="158" Click="b_deleteTems_Click" FontFamily="Times New Roman" FontSize="20"/>
+                    <Button x:Name="b_offTems" Content="Вык/Вкл тему" HorizontalAlignment="Left" Margin="615,0,0,0" VerticalAlignment="Center" Width="158" Click="b_deleteTems_Click" FontFamily="Times New Roman" FontSize="20"/>
                     <ListBox x:Name="lb_" d:ItemsSource="{d:SampleData ItemCount=10}" Margin="10,35,184,45" MouseDoubleClick="lb__MouseDoubleClick" FontFamily="Courier New" FontSize="20"/>
                     <Button x:Name="b_deleteTems" Content="Удалить" HorizontalAlignment="Left" Margin="615,350,0,0" VerticalAlignment="Top" Width="158" Click="b_deleteTems_Click" FontFamily="Times New Roman" FontSize="20"/>
                     <Button x:Name="b_refresh" Content="Обновить" HorizontalAlignment="Left" Margin="615,67,0,0" VerticalAlignment="Top" Width="158" Click="b_refresh_Click" FontFamily="Times New Roman" FontSize="20"/>
