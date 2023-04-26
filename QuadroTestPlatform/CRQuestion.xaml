@@ -9,23 +9,30 @@
         mc:Ignorable="d"
         Title="QTP" Height="731" Width="1052">
     <Grid Background="#FF585858" Margin="0,0,0,-6">
-        <Button x:Name="b_SetQuestion" Content="Готово" HorizontalAlignment="Left" Margin="18,231,0,0" VerticalAlignment="Top" Width="138" Click="Button_Click"/>
-        <TextBox x:Name="tb_answer1" HorizontalAlignment="Left" Margin="252,205,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="726" Height="72"/>
-        <TextBox x:Name="tb_answer2" HorizontalAlignment="Left" Margin="252,282,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="726" Height="72"/>
-        <TextBox x:Name="tb_answer3" HorizontalAlignment="Left" Margin="252,359,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="726" Height="72"/>
-        <TextBox x:Name="tb_answer4" HorizontalAlignment="Left" Margin="252,437,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="726" Height="72"/>
-        <TextBox x:Name="tb_answer5" HorizontalAlignment="Left" Margin="252,514,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="726" Height="72"/>
-        <TextBox x:Name="tb_answer6" HorizontalAlignment="Left" Margin="252,591,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="726" Height="72"/>
-        <CheckBox x:Name="cb_true1" Content="" HorizontalAlignment="Left" Margin="227,233,0,0" VerticalAlignment="Top"/>
-        <CheckBox x:Name="cb_true2" Content="" HorizontalAlignment="Left" Margin="227,310,0,0" VerticalAlignment="Top"/>
-        <CheckBox x:Name="cb_true3" Content="" HorizontalAlignment="Left" Margin="227,387,0,0" VerticalAlignment="Top"/>
-        <CheckBox x:Name="cb_true4" Content="" HorizontalAlignment="Left" Margin="227,465,0,0" VerticalAlignment="Top"/>
-        <CheckBox x:Name="cb_true5" Content="" HorizontalAlignment="Left" Margin="227,542,0,0" VerticalAlignment="Top"/>
-        <CheckBox x:Name="cb_true6" Content="" HorizontalAlignment="Left" Margin="227,619,0,0" VerticalAlignment="Top"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="183*"/>
+            <RowDefinition Height="538*"/>
+        </Grid.RowDefinitions>
+        <Button x:Name="b_SetQuestion" Content="Готово" HorizontalAlignment="Left" Margin="896,111,0,0" VerticalAlignment="Top" Width="138" Click="Button_Click"/>
+        <TextBox x:Name="tb_answer1" HorizontalAlignment="Left" Margin="252,22,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="726" Height="72" Grid.Row="1"/>
+        <TextBox x:Name="tb_answer2" HorizontalAlignment="Left" Margin="252,99,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="726" Height="72" Grid.Row="1"/>
+        <TextBox x:Name="tb_answer3" HorizontalAlignment="Left" Margin="252,176,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="726" Height="72" Grid.Row="1"/>
+        <TextBox x:Name="tb_answer4" HorizontalAlignment="Left" Margin="252,254,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="726" Height="72" Grid.Row="1"/>
+        <TextBox x:Name="tb_answer5" HorizontalAlignment="Left" Margin="252,331,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="726" Height="72" Grid.Row="1"/>
+        <TextBox x:Name="tb_answer6" HorizontalAlignment="Left" Margin="252,408,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="726" Height="72" Grid.Row="1"/>
+        <CheckBox x:Name="cb_true1" Content="" HorizontalAlignment="Left" Margin="227,50,0,0" VerticalAlignment="Top" Grid.Row="1"/>
+        <CheckBox x:Name="cb_true2" Content="" HorizontalAlignment="Left" Margin="227,127,0,0" VerticalAlignment="Top" Grid.Row="1"/>
+        <CheckBox x:Name="cb_true3" Content="" HorizontalAlignment="Left" Margin="227,204,0,0" VerticalAlignment="Top" Grid.Row="1"/>
+        <CheckBox x:Name="cb_true4" Content="" HorizontalAlignment="Left" Margin="227,282,0,0" VerticalAlignment="Top" Grid.Row="1"/>
+        <CheckBox x:Name="cb_true5" Content="" HorizontalAlignment="Left" Margin="227,359,0,0" VerticalAlignment="Top" Grid.Row="1"/>
+        <CheckBox x:Name="cb_true6" Content="" HorizontalAlignment="Left" Margin="227,436,0,0" VerticalAlignment="Top" Grid.Row="1"/>
         <TextBox x:Name="tb_nameQuestion" HorizontalAlignment="Center" AcceptsReturn="True" Margin="0,38,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="1016" Height="58"/>
-        <TextBlock HorizontalAlignment="Center" Margin="0,10,0,0" TextWrapping="Wrap" Text="Формулировка вопроса" VerticalAlignment="Top" Width="133"/>
-        <TextBlock HorizontalAlignment="Center" Margin="0,170,0,0" TextWrapping="Wrap" Text="Ответы" VerticalAlignment="Top"/>
-        <Button x:Name="button_multiplayQuestion" Content="Мульти вопрос" HorizontalAlignment="Left" Margin="18,106,0,0" VerticalAlignment="Top" Width="138" FontSize="14" FontFamily="Times New Roman" Click="button_multiplayQuestion_Click"/>
+        <TextBlock HorizontalAlignment="Center" Margin="0,10,0,0" TextWrapping="Wrap" Text="Формулировка вопроса" VerticalAlignment="Top" Width="132"/>
+        <TextBlock HorizontalAlignment="Center" Margin="0,170,0,0" TextWrapping="Wrap" Text="Ответы" VerticalAlignment="Top" Grid.RowSpan="2"/>
+        <Button x:Name="button_multiplayQuestion" Content="Распределение  ответов" HorizontalAlignment="Left" Margin="18,106,0,0" VerticalAlignment="Top" Width="188" FontSize="14" FontFamily="Times New Roman" Click="button_multiplayQuestion_Click"/>
+        <Button x:Name="button_multiplayQuestion_help" Content="Что за кнопка ?" HorizontalAlignment="Left" Margin="18,131,0,0" VerticalAlignment="Top" Width="188" FontFamily="Times New Roman" FontSize="14">
+            
+        </Button>
 
     </Grid>
 </Window>
