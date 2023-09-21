@@ -27,16 +27,23 @@ namespace QuadroTestPlatform
             time.Items.Add("2,5");
             time.Items.Add("3");
             time.SelectedItem = time.Items[1];
-            tb_5.Text = "1";
-            tb_4.Text = "2";
-            tb_3.Text = "3";
-
-                
+            setNumberItem(five);
+            setNumberItem(three);
+            setNumberItem(four);
+            setNumberItem(tb_numberQusetion);
         }
 
+        private void setNumberItem(ComboBox item)
+        {
+            for (int i = 0;i <100;i++)
+            {
+                item.Items.Add(i);
+            }
+        }
+        
         private void submit_Click(object sender, RoutedEventArgs e)
         {
-            if(tb_numberQusetion.Text == "" ||tb_nameTems.Text == "" || tb_5.Text == "" || tb_4.Text == "" || tb_3.Text == "")
+            if(tb_numberQusetion.Text == "" ||tb_nameTems.Text == "" || five.Text == "" || four.Text == "" || three.Text == "")
             {
                 MessageBox.Show("Заполните все поля","Внимание",MessageBoxButton.OK,MessageBoxImage.Error);
                 return;
@@ -49,9 +56,9 @@ namespace QuadroTestPlatform
             }
             try
             {
-                int a = Convert.ToInt32(tb_5.Text.ToString().Trim());
-                a = Convert.ToInt32(tb_4.Text.ToString().Trim());
-                a = Convert.ToInt32(tb_3.Text.ToString().Trim());
+                int a = Convert.ToInt32(five.Text.ToString().Trim());
+                a = Convert.ToInt32(four.Text.ToString().Trim());
+                a = Convert.ToInt32(three.Text.ToString().Trim());
                 a = Convert.ToInt32(tb_numberQusetion.Text.ToString().Trim());
             }
             catch
@@ -59,7 +66,7 @@ namespace QuadroTestPlatform
                 MessageBox.Show("Введите корректно критерии оценивания", "Внимание", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
-            if (!(Convert.ToInt32(tb_5.Text.ToString().Trim()) < Convert.ToInt32(tb_4.Text.ToString().Trim()) && Convert.ToInt32(tb_4.Text.ToString().Trim()) < Convert.ToInt32(tb_3.Text.ToString().Trim())))
+            if (!(Convert.ToInt32(five.Text.ToString().Trim()) < Convert.ToInt32(four.Text.ToString().Trim()) || Convert.ToInt32(four.Text.ToString().Trim()) < Convert.ToInt32(three.Text.ToString().Trim())))
             {
                 MessageBox.Show("Внивание, вы ввели неверно критери оценивани (не может критерий за 5 быть больше или равен за 4).", "Внимание", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
@@ -68,7 +75,7 @@ namespace QuadroTestPlatform
             {
                 conn.Open();
                 SqlCommand comm = new SqlCommand();
-                comm.CommandText = "INSERT INTO t_tems (Name, tree, four, five, CountQMax, time, tr) VALUES (\'" + tb_nameTems.Text.Trim() + "\', " + tb_3.Text.Trim() + ", " + tb_4.Text.Trim() + ", " + tb_5.Text.Trim() + ", " + tb_numberQusetion.Text.Trim() + ", \'" + time.Text.Trim() + "\', 1)";
+                comm.CommandText = "INSERT INTO t_tems (Name, tree, four, five, CountQMax, time, tr) VALUES (\'" + tb_nameTems.Text.Trim() + "\', " + three.Text.Trim() + ", " + four.Text.Trim() + ", " + five.Text.Trim() + ", " + tb_numberQusetion.Text.Trim() + ", \'" + time.Text.Trim() + "\', 1)";
                 comm.Connection = conn;
                 comm.ExecuteNonQuery();
                 conn.Close();
