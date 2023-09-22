@@ -136,6 +136,23 @@ namespace QuadroTestPlatform
             }
 }
 
+        private string CutWord(string word)
+        {
+            string answer = "";
+            if (word.Length > 25)
+            {
+                for (int i = 0; i < 25; i++)
+                {
+                    answer += word[i];
+                }
+            }
+            else
+            {
+                return word;
+            }
+
+            return answer+"...";
+        }
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             CreateNewTems form = new CreateNewTems();
@@ -1026,11 +1043,8 @@ namespace QuadroTestPlatform
                         OnOrOf = "Выкл";
                     }
                     countTemsForLB++;
-                    lb_.Items.Add(
-                        Convert.ToString(countTemsForLB) + "." +
-                        getVoidSpaceOne(Convert.ToString(countTemsForLB) + ".", 4) +
-                        read.GetValue(1).ToString() +
-                        getVoidSpaceOne(Convert.ToString(countTemsForLB) + "." + getVoidSpaceOne(Convert.ToString(countTemsForLB) + ".", 4) + read.GetValue(1).ToString(), 45) + OnOrOf);
+                    lb_.Items.Add( Convert.ToString(countTemsForLB) + "." + getVoidSpaceOne(Convert.ToString(countTemsForLB) + ".", 4) +  
+                        read.GetValue(1).ToString() + getVoidSpaceOne(Convert.ToString(countTemsForLB) + "." + getVoidSpaceOne(Convert.ToString(countTemsForLB) + ".", 4) + CutWord(read.GetValue(1).ToString()), 45) + OnOrOf);
                 }
                 read.Close();
                 c.Close();

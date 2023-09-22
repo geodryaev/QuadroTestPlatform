@@ -66,7 +66,7 @@ namespace QuadroTestPlatform
                 MessageBox.Show("Введите корректно критерии оценивания", "Внимание", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
-            if (!(Convert.ToInt32(five.Text.ToString().Trim()) < Convert.ToInt32(four.Text.ToString().Trim()) || Convert.ToInt32(four.Text.ToString().Trim()) < Convert.ToInt32(three.Text.ToString().Trim())))
+            if (!(Convert.ToInt32(five.Text.ToString().Trim()) > Convert.ToInt32(four.Text.ToString().Trim()) || Convert.ToInt32(four.Text.ToString().Trim()) > Convert.ToInt32(three.Text.ToString().Trim())))
             {
                 MessageBox.Show("Внивание, вы ввели неверно критери оценивани (не может критерий за 5 быть больше или равен за 4).", "Внимание", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;

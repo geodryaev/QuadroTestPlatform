@@ -8,7 +8,7 @@
         mc:Ignorable="d"
         Title="Добавление новой темы" Height="300" Width="800">
     <Grid Height="250" Width="800">
-        <TextBox x:Name="tb_nameTems" HorizontalAlignment="Center" Margin="0,40,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="700" Height="25"/>
+        <TextBox x:Name="tb_nameTems" HorizontalAlignment="Center" Margin="0,-160,0,0" TextWrapping="Wrap" VerticalAlignment="Center" Width="700" Height="25"/>
 
         <Label Content="Наименование темы" HorizontalAlignment="Center" Margin="0,5,0,0" VerticalAlignment="Top" Height="26" Width="125"/>
         <Label Content="Количество вопросов в тесте" HorizontalAlignment="Left" Margin="10,80,0,0" VerticalAlignment="Top" Height="26" Width="171"/>
@@ -23,7 +23,7 @@
         <ComboBox x:Name="five" HorizontalAlignment="Left" Margin="600,110,0,0" VerticalAlignment="Top" Width="120" IsReadOnly="True"/>
         <ComboBox x:Name="four" HorizontalAlignment="Left" Margin="600,140,0,0" VerticalAlignment="Top" Width="120" IsReadOnly="True"/>
         <ComboBox x:Name="three" HorizontalAlignment="Left" Margin="600,170,0,0" Width="120" IsReadOnly="True" Height="22" VerticalAlignment="Top"/>
-        <Button x:Name="submit" Content="Создать" HorizontalAlignment="Center" Margin="0,200,0,0" VerticalAlignment="Top" Width="750" Click="submit_Click"/>
+        <Button x:Name="submit" Content="Создать" HorizontalAlignment="Center" Margin="0,200,0,0" VerticalAlignment="Center" Width="750" Click="submit_Click"/>
 
     </Grid>
 </Window>
