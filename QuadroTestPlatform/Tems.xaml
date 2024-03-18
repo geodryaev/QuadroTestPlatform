@@ -14,7 +14,7 @@
         <TextBlock x:Name="tb"  HorizontalAlignment="Left" Margin="10,13,0,0" TextWrapping="Wrap" Text="Наименование темы тестирования" VerticalAlignment="Top" Height="22" Width="500" TextAlignment="Center" FontFamily="Times New Roman" FontSize="20"/>
         <Button x:Name="b_replace" Content="Изменить" HorizontalAlignment="Left" Margin="536,563,0,0" VerticalAlignment="Top" Width="172" Height="29" Click="b_replace_Click" FontSize="24" FontFamily="Times New Roman"/>
         <Button x:Name="b_отмена" Content="Отменить" HorizontalAlignment="Left" Margin="10,563,0,0" VerticalAlignment="Top" Width="123" Height="32" FontSize="24" FontFamily="Times New Roman"/>
-        <TextBlock HorizontalAlignment="Left" Margin="668,13,0,0" TextWrapping="Wrap" Text="Ограничения на колчиество заданий в тесте" VerticalAlignment="Top" Height="25" Width="246" FontFamily="Times New Roman" FontSize="20"/>
+        <TextBlock HorizontalAlignment="Left" Margin="668,13,0,0" TextWrapping="Wrap" Text="Ограничения на количество заданий в тесте" VerticalAlignment="Top" Height="25" Width="246" FontFamily="Times New Roman" FontSize="20"/>
         <TextBox x:Name="tb_countQMax" TextAlignment="Center" HorizontalAlignment="Left" Margin="717,46,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="132" Height="25" TextBlock.FontFamily="Times New Roman" TextBlock.FontSize="20"/>
         <DataGrid  x:Name="dg_question"  IsReadOnly="True" LoadingRow="dg_question_LoadingRow" AutoGenerateColumns="False" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="10,206,10,149" FontFamily="Times New Roman" FontSize="20">
             <DataGrid.ColumnHeaderStyle>
